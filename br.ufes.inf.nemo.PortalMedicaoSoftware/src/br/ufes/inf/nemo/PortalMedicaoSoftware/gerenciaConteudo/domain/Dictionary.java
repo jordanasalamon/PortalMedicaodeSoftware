@@ -1,8 +1,11 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain;
 
-import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
@@ -10,12 +13,13 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 public class Dictionary  extends PersistentObjectSupport{
 	
 	private static final long serialVersionUID = 1L;
-	private HashSet<Term> Terms;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Term> Terms;
 	
-	public HashSet<Term> getTerms() {
+	public Set<Term> getTerms() {
 		return Terms;
 	}
-	public void setTerms(HashSet<Term> terms) {
+	public void setTerms(Set<Term> terms) {
 		Terms = terms;
 	}
 

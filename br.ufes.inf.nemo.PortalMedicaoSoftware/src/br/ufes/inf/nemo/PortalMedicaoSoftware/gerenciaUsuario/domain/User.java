@@ -1,28 +1,22 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.domain;
 
 import javax.persistence.Entity;
-
-import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
+import javax.validation.constraints.Size;
 
 @Entity
-public class User extends PersistentObjectSupport {
+public class User extends Person {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String Name;
+
 	private String Email;
-	private String Login;
+	private String Username;
+	@Size(max = 10)
 	private String Password;
 	private boolean isAdmin;
 	
-	public String getName() {
-		return Name;
-	}
-	public void setName(String name) {
-		Name = name;
-	}
 	public String getEmail() {
 		return Email;
 	}
@@ -30,12 +24,6 @@ public class User extends PersistentObjectSupport {
 		Email = email;
 	}
 
-	public String getLogin() {
-		return Login;
-	}
-	public void setLogin(String login) {
-		this.Login = login;
-	}
 	public String getPassword() {
 		return Password;
 	}
@@ -47,6 +35,12 @@ public class User extends PersistentObjectSupport {
 	}
 	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+	public String getUsername() {
+		return Username;
+	}
+	public void setUsername(String username) {
+		Username = username;
 	}
 	
 	

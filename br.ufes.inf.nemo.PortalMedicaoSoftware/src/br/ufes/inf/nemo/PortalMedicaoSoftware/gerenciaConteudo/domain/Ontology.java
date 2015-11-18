@@ -1,6 +1,7 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
@@ -11,6 +12,7 @@ public class Ontology extends PersistentObjectSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Size(max = 150)
 	private String Name;
 	private String Description;
 	private String Filepath;

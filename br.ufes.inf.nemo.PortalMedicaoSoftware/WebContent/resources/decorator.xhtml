@@ -4,21 +4,69 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
 	xmlns:b="http://bootsfaces.net/ui">
 
-	<h:head>
-		<title>Portal de Medição de Software - NEMO</title>
-		<meta name="author" content="Jordana Salamon"></meta>
-	</h:head>
+<h:head>
+	<title>Portal de Medição de Software - NEMO</title>
+	<meta name="author" content="Jordana Salamon"></meta>
+</h:head>
 
-	<h:body style="padding-top: 60px">
-		<!--<h:outputScript library="holder" name="holder.js" />-->
-		<script	src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script>
-		<link href='https://fonts.googleapis.com/css?family=Ubuntu:500' rel='stylesheet' type='text/css' />
-		<h:outputStylesheet name="templates/default/stylesheets/style.css" />
+<h:body style="padding-top: 60px">
+	<!--<h:outputScript library="holder" name="holder.js" />-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu:500'
+		rel='stylesheet' type='text/css' />
+	<h:outputStylesheet name="templates/default/stylesheets/style.css" />
 
-		<b:navBar brand="NEMO" brandHref="#" inverse="true" fixed="top"	fluid="true"></b:navBar>
-	
-	
-	</h:body>
+
+	<b:navBar brand="NEMO" brandHref="#" inverse="true" fixed="top"
+		fluid="true">
+		
+            <b:navbarLinks pull="right" rendered="#{manageUsersController.loggedIn}">
+                <b:navLink value="#{manageUsersController.currentUserLogin}" href="#"></b:navLink>
+                <b:navLink value="#{msgs['navbar.logout']}" href="/index.faces"  />
+            </b:navbarLinks>
+
+	</b:navBar>
+
+	<b:container fluid="true">
+		<b:row>
+
+			<b:column col-sm="3" col-md="2" styleClass="sidebar" rendered="#{manageUserController.loggedIn}">
+                    <b:listLinks rendered="#{manageUserController.user}">
+                        <b:navLink href="/home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
+                        <b:navLink href="/managePublications/list.faces" value="#{msgs['menu.manage.publications']}" />
+                        <b:navLink href="/manageDictionary/list.faces" value="#{msgs['menu.manage.dictionary']}" />
+                        <b:navLink href="/manageOntologies/list.faces" value="#{msgs['menu.manage.ontologies']}" />
+                        <b:navLink href="/manageTools/list.faces" value="#{msgs['menu.manage.tools']}" />
+                        <b:navLink href="/manageWorks/list.faces" value="#{msgs['menu.manage.works']}" />
+                        <b:navLink href="/manageContacts/list.faces" value="#{msgs['menu.manage.contacts']}" />
+                    </b:listLinks>
+                    <b:listLinks rendered="#{manageUserController.admin}">
+                        <b:navLink href="/managePublications/listAdmin.faces" value="#{msgs['menu.manage.publications']}" active="true" />
+                        <b:navLink href="/manageDictionary/listAdmin.faces" value="#{msgs['menu.manage.dictionary']}" />
+                        <b:navLink href="/manageOntologies/listAdmin.faces" value="#{msgs['menu.manage.ontologies']}" />
+                        <b:navLink href="/manageTools/listAdmin.faces" value="#{msgs['menu.manage.tools']}" />
+                        <b:navLink href="/manageWorks/listAdmin.faces" value="#{msgs['menu.manage.works']}" />
+                    </b:listLinks>
+                </b:column>
+
+			<b:column col-sm="9" offset-sm="3" col-md="10" offset="2"
+				styleClass="main">
+				<h:form id="globalMessages">
+					<p:growl id="messages" globalOnly="true" showSummary="true"
+						showDetail="true" sticky="true" />
+				</h:form>
+
+				<!-- Page contents: -->
+				<ui:insert name="body" />
+			</b:column>
+		</b:row>
+	</b:container>
+
+
+
+</h:body>
 </html>

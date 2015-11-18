@@ -9,8 +9,8 @@ import br.ufes.inf.nemo.util.ejb3.application.CrudServiceBean;
 import br.ufes.inf.nemo.util.ejb3.persistence.BaseDAO;
 
 @Stateless
-public class ManageUsersServiceBean extends CrudServiceBean<User> implements
-		ManageUsersService {
+public class ManageRegisterServiceBean extends CrudServiceBean<User> implements
+		ManageRegisterService {
 
 	/**
 	 * 
@@ -30,15 +30,20 @@ public class ManageUsersServiceBean extends CrudServiceBean<User> implements
 	}
 
 	@Override
-	public User login(String username, String password) {
+	public User register(String name, String email, String username, String password) {
 		try {
-			User user = userDAO.retrieveByUsername(username);
-			if(user != null) {
-				String passwd = user.getPassword();
-				if(passwd.equals(password)){
-					return user;
-				}
-			}			
+			User newUser = new User();
+			newUser.setName(name);
+			newUser.setEmail(email);
+			newUser.setUsername(username);
+			newUser.setPassword(password);
+			if(this.userDAO.retrieveAll().isEmpty()){
+				newUser.setIsAdmin(true);
+			}
+			else{
+				newUser.setIsAdmin(false);
+			}
+			return newUser;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

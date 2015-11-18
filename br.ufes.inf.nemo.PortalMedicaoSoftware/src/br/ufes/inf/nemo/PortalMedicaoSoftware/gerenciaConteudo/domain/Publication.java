@@ -1,9 +1,12 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 import br.ufes.inf.nemo.PortalMedicaoSoftware.util.Authorship;
@@ -23,7 +26,8 @@ public class Publication extends PersistentObjectSupport {
 	private String Abstract;
 	private Authorship Authorship;
 	private Type Type;
-	private HashSet<Author> Authors;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Author> Authors;
 	
 	public String getTitle() {
 		return Title;
@@ -70,10 +74,10 @@ public class Publication extends PersistentObjectSupport {
 	public void setType(Type type) {
 		Type = type;
 	}
-	public HashSet<Author> getAuthors() {
+	public Set<Author> getAuthors() {
 		return Authors;
 	}
-	public void setAuthors(HashSet<Author> Authors) {
+	public void setAuthors(Set<Author> Authors) {
 		this.Authors = Authors;
 	}
 		
