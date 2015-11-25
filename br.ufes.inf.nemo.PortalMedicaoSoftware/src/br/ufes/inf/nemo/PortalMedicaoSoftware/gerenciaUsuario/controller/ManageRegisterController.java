@@ -22,7 +22,6 @@ public class ManageRegisterController extends CrudController<User> {
 	private String email;
 	private String username;
 	private String password;
-	private boolean isAdmin;
 	
 	private User newUser;
 
@@ -44,14 +43,6 @@ public class ManageRegisterController extends CrudController<User> {
 	protected void initFilters() {
 		// TODO Auto-generated method stub
 
-	}
-
-	public boolean isAdmin() {
-		return this.isAdmin == true;
-	}
-	
-	public boolean isUser(){
-		return this.isAdmin == false;
 	}
 
 	public String getEmail() {
@@ -78,10 +69,6 @@ public class ManageRegisterController extends CrudController<User> {
 		this.password = password;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -101,6 +88,8 @@ public class ManageRegisterController extends CrudController<User> {
 	public String register(){
 		try{
 			this.newUser = this.manageRegisterService.register(name, email, username, password);
+			this.manageRegisterService.create(newUser);
+			this.save();
 			if(this.newUser != null){
 				return "/index.faces";
 			}

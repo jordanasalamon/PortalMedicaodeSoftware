@@ -9,13 +9,13 @@ import javax.persistence.metamodel.*;
 @StaticMetamodel(Contact.class)
 public class Contact_ extends PersistentObjectSupport_ {
 
-	public static volatile SingularAttribute<Contact, String> TitleMessage;
-	public static volatile SingularAttribute<Contact, Date> DateMessage;
-	public static volatile SingularAttribute<Contact, String> TextMessage;
-	public static volatile SingularAttribute<Contact, Boolean> Answered;
-	public static volatile SingularAttribute<Contact, Date> DateAnswer;
-	public static volatile SingularAttribute<Contact, String> AnsweredMessage;
-	public static volatile SingularAttribute<Contact, User> Sender;
-	public static volatile SingularAttribute<Contact, User> Receiver;
+	public static volatile SingularAttribute<Contact, String> messageSubject;
+	public static volatile SingularAttribute<Contact, Date> messageDate;
+	public static volatile SingularAttribute<Contact, String> messageText;
+	public static volatile SingularAttribute<Contact, Boolean> isAnswered;
+	public static volatile SingularAttribute<Contact, Date> answerDate;
+	public static volatile SingularAttribute<Contact, String> answerMessage;
+	public static volatile SingularAttribute<Contact, User> sender;
+	public static volatile SingularAttribute<Contact, User> receiver;
 
 }

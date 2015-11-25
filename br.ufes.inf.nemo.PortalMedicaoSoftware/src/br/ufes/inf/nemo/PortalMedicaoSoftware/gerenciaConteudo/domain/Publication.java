@@ -8,12 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
-import br.ufes.inf.nemo.PortalMedicaoSoftware.util.Authorship;
-import br.ufes.inf.nemo.PortalMedicaoSoftware.util.Type;
-
 @Entity
-public class Publication extends PersistentObjectSupport {
+public class Publication extends PortalItem {
 
 	/**
 	 * 
@@ -24,8 +20,8 @@ public class Publication extends PersistentObjectSupport {
 	private String Filepath;
 	private String Reference;
 	private String Abstract;
-	private Authorship Authorship;
-	private Type Type;
+	private Boolean isByNemo;
+	private PublicationType Type;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Author> Authors;
 	
@@ -62,16 +58,10 @@ public class Publication extends PersistentObjectSupport {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Authorship getAuthorship() {
-		return Authorship;
-	}
-	public void setAuthorship(Authorship authorship) {
-		Authorship = authorship;
-	}
-	public Type getType() {
+	public PublicationType getType() {
 		return Type;
 	}
-	public void setType(Type type) {
+	public void setType(PublicationType type) {
 		Type = type;
 	}
 	public Set<Author> getAuthors() {
@@ -79,6 +69,12 @@ public class Publication extends PersistentObjectSupport {
 	}
 	public void setAuthors(Set<Author> Authors) {
 		this.Authors = Authors;
+	}
+	public Boolean getIsByNemo() {
+		return isByNemo;
+	}
+	public void setIsByNemo(Boolean isByNemo) {
+		this.isByNemo = isByNemo;
 	}
 		
 	

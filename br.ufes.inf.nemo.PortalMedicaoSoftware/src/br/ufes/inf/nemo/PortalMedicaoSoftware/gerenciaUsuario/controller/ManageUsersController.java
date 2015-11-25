@@ -90,8 +90,8 @@ public class ManageUsersController extends CrudController<User> {
 	
 	public String login(){
 		try {
-			this.currentUser = this.manageUsersService.login(currentUserLogin, currentUserPassword);
-			if(this.currentUser != null){
+			currentUser = this.manageUsersService.login(currentUserLogin, currentUserPassword);
+			if(currentUser != null){
 				return "/home.faces";
 			}
 		} catch (Exception e) {
@@ -102,8 +102,8 @@ public class ManageUsersController extends CrudController<User> {
 	}
 	
 	public String logout() {
-		this.currentUserLogin = "";
-		this.currentUserPassword = "";
+		currentUserLogin = "";
+		currentUserPassword = "";
 		currentUser = null;
 		return "/index.faces";
 	}

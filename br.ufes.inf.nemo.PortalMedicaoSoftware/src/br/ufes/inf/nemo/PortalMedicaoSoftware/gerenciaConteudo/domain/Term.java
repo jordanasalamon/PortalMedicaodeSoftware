@@ -10,23 +10,21 @@ public class Term  extends PersistentObjectSupport{
 	
 	private static final long serialVersionUID = 1L;
     @Size(max = 150)
-	private String Name;
-	private String Description;
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String Name) {
-		this.Name = Name;
-	}
-
-	public String getDescription() {
-		return Description;
-	}
-
-	public void setDescription(String description) {
-		Description = description;
-	}
+	private String name;
+	private String description;
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+		
 }

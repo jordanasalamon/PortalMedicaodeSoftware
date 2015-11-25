@@ -7,20 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
-
 @Entity
-public class Dictionary  extends PersistentObjectSupport{
+public class Dictionary  extends PortalItem{
 	
 	private static final long serialVersionUID = 1L;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Term> Terms;
+	private Set<Term> terms;
 	
 	public Set<Term> getTerms() {
-		return Terms;
+		return terms;
 	}
 	public void setTerms(Set<Term> terms) {
-		Terms = terms;
+		this.terms = terms;
 	}
 
 }

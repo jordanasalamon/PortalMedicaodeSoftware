@@ -4,8 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui" 
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
 	template="/resources/decoratorLogin.xhtml">
 
 	<ui:define name="title">
@@ -35,6 +34,9 @@
 									value="#{manageUsersController.currentUserLogin}" size="30"
 									required="true" style="width:300px;">
 									<p:ajax event="blur" update="usernameField" />
+									<f:facet name="prepend">
+                                    <b:iconAwesome name="user" />
+                                	</f:facet>
 								</b:inputText>
 							</ui:decorate>
 						</h:panelGroup>
@@ -45,9 +47,13 @@
 								<ui:define name="label">
 									<h:outputText value="#{msgs['field.password']}" />
 								</ui:define>
-								<p:password id="password"
-									value="#{manageUsersController.currentUserPassword}" size="15"
-									required="true" feedback="false" />
+								<b:inputText id="password" type="password"
+									value="#{manageUsersController.currentUserPassword}" size="15" style="width:300px;"
+									required="true" feedback="false" >
+									<f:facet name="prepend">
+                                    <b:iconAwesome name="key" />
+                                	</f:facet>
+                                	</b:inputText>
 							</ui:decorate>
 						</h:panelGroup>
 
@@ -55,14 +61,12 @@
 
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{manageUsersController.login}"
-								value="#{msgs['button.login']}" icon="buttonOk"
-								update=":globalMessages form" />
+								value="#{msgs['button.login']}" update=":globalMessages form" ajax="false" />
+							<h2></h2>
+							<b:button id="registro" outcome="/pages/manageRegister/form.xhtml?faces-redirect=true" 
+								value="#{msgs['button.register']}" update=":globalMessages form" ajax="false" />
+								
 						</ui:decorate>
-
-						<p:commandLink id="registro" href="/pages/manageRegister/form.xhtml"
-							ajax="false">
-							<h:outputText value="Registre-se" />
-						</p:commandLink>
 					</h:form>
 				</ui:decorate>
 			</h:panelGroup>

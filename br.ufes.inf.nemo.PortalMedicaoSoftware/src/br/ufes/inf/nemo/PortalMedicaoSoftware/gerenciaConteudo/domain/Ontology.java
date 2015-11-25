@@ -1,46 +1,29 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.Size;
-
-import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
 @Entity
-public class Ontology extends PersistentObjectSupport {
+public class Ontology extends PortalItem {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Size(max = 150)
-	private String Name;
-	private String Description;
-	private String Filepath;
-	private String Link;
+	private String filepath;
+	private String link;
 	
-	public String getName() {
-		return Name;
-	}
-	public void setName(String name) {
-		Name = name;
-	}
-	public String getDescription() {
-		return Description;
-	}
-	public void setDescription(String description) {
-		Description = description;
-	}
 	public String getFilepath() {
-		return Filepath;
+		return filepath;
 	}
 	public void setFilepath(String filepath) {
-		Filepath = filepath;
+		this.filepath = filepath;
 	}
 	public String getLink() {
-		return Link;
+		return link;
 	}
 	public void setLink(String link) {
-		Link = link;
-	}	
+		this.link = link;
+	}
+	
 	
 }

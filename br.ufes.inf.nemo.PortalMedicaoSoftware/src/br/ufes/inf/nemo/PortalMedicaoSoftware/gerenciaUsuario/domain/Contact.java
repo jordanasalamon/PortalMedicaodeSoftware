@@ -13,65 +13,63 @@ public class Contact extends PersistentObjectSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String TitleMessage;
-	private Date DateMessage;
-	private String TextMessage;
-	private boolean Answered;
-	private Date DateAnswer;
-	private String AnsweredMessage;
-	private User Sender;
-	private User Receiver;
+	private String messageSubject;
+	private Date messageDate;
+	private String messageText;
+	private boolean isAnswered;
+	private Date answerDate;
+	private String answerMessage;
+	private User sender;
+	private User receiver;
 	
-	public String getTitleMessage() {
-		return TitleMessage;
+	public String getMessageSubject() {
+		return messageSubject;
 	}
-	public void setTitleMessage(String titleMessage) {
-		TitleMessage = titleMessage;
+	public void setMessageSubject(String messageSubject) {
+		this.messageSubject = messageSubject;
 	}
-	public Date getDateMessage() {
-		return DateMessage;
+	public Date getMessageDate() {
+		return messageDate;
 	}
-	public void setDateMessage(Date dateMessage) {
-		DateMessage = dateMessage;
+	public void setMessageDate(Date messageDate) {
+		this.messageDate = messageDate;
 	}
-	public String getTextMessage() {
-		return TextMessage;
+	public String getMessageText() {
+		return messageText;
 	}
-	public void setTextMessage(String textMessage) {
-		TextMessage = textMessage;
+	public void setMessageText(String messageText) {
+		this.messageText = messageText;
 	}
 	public boolean isAnswered() {
-		return Answered;
+		return isAnswered;
 	}
-	public void setAnswered(boolean answered) {
-		Answered = answered;
+	public void setAnswered(boolean isAnswered) {
+		this.isAnswered = isAnswered;
 	}
-	public Date getDateAnswer() {
-		return DateAnswer;
+	public Date getAnswerDate() {
+		return answerDate;
 	}
-	public void setDateAnswer(Date dateAnswer) {
-		DateAnswer = dateAnswer;
+	public void setAnswerDate(Date answerDate) {
+		this.answerDate = answerDate;
 	}
-	public String getAnsweredMessage() {
-		return AnsweredMessage;
+	public String getAnswerMessage() {
+		return answerMessage;
 	}
-	public void setAnsweredMessage(String answeredMessage) {
-		AnsweredMessage = answeredMessage;
+	public void setAnswerMessage(String answerMessage) {
+		this.answerMessage = answerMessage;
 	}
 	public User getSender() {
-		return Sender;
+		return sender;
 	}
 	public void setSender(User sender) {
-		Sender = sender;
+		this.sender = sender;
 	}
 	public User getReceiver() {
-		return Receiver;
+		return receiver;
 	}
 	public void setReceiver(User receiver) {
-		Receiver = receiver;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+		this.receiver = receiver;
 	}
 	
+
 }

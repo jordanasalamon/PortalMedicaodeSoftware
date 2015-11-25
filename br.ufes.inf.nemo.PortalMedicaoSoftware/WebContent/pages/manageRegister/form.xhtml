@@ -11,83 +11,101 @@
 		<h:outputText value="#{msgs['title.register']}" />
 	</ui:define>
 
-	<div id="formularioCadastro">
-		<h:panelGroup>
-			<h1>
-				<h:outputText value="#{msgs['title.register']}" />
-			</h1>
+	<ui:define name="body">
 
-			<!-- The login form. -->
-			<ui:decorate template="/resources/form.xhtml">
-				<h:form id="formRegistro">
-					<p:focus />
+		<div id="formularioCadastro">
+			<h:panelGroup>
+				<h1>
+					<h:outputText value="#{msgs['title.register']}" />
+				</h1>
 
-					<h:panelGroup id="nameField">
-						<ui:decorate template="/resources/formfield.xhtml">
-							<ui:param name="fieldName" value="form:name" />
-							<ui:define name="label">
-								<h:outputText value="#{msgs['field.name']}" />
-							</ui:define>
-							<b:inputText id="name"
-								value="#{manageRegisterController.name}" size="30"
-								required="true" style="width:300px;">
-								<p:ajax event="blur" update="nameField" />
-							</b:inputText>
+				<!-- The register form. -->
+				<ui:decorate template="/resources/form.xhtml">
+					<h:form id="form">
+						<p:focus />
+
+						<h:panelGroup id="nameField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldName" value="form:name" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['manageRegister.form.name']}" />
+								</ui:define>
+								<b:inputText id="name" value="#{manageRegisterController.name}"
+									size="100" required="true" style="width:300px;">
+									<p:ajax event="blur" update="nameField" />
+									<f:facet name="prepend">
+										<b:iconAwesome name="user" />
+									</f:facet>
+								</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+						<h:panelGroup id="emailField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldName" value="form:email" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['manageRegister.form.email']}" />
+								</ui:define>
+								<b:inputText id="email"
+									value="#{manageRegisterController.email}" size="30"
+									required="true" style="width:300px;">
+									<p:ajax event="blur" update="emailField" />
+									<f:facet name="prepend">
+										<b:iconAwesome name="envelope" />
+									</f:facet>
+								</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+
+						<h:panelGroup id="usernameField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldName" value="form:username" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['manageRegister.form.username']}" />
+								</ui:define>
+								<b:inputText id="username"
+									value="#{manageRegisterController.username}" size="30"
+									required="true" style="width:300px;">
+									<p:ajax event="blur" update="usernameField" />
+									<f:facet name="prepend">
+										<b:iconAwesome name="user" />
+									</f:facet>
+								</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+						<h:panelGroup id="passwordField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldName" value="form:password" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['manageRegister.form.password']}" />
+								</ui:define>
+								<b:inputText id="password" type="password"
+									value="#{manageRegisterController.password}" size="15"
+									style="width:300px;" required="true" feedback="false">
+									<f:facet name="prepend">
+										<b:iconAwesome name="key" />
+									</f:facet>
+								</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+						<h1></h1>
+
+						<ui:decorate template="/resources/formbutton.xhtml">
+							<b:commandButton action="#{manageRegisterController.register}"
+								value="#{msgs['button.register']}" update=":globalMessages form" icon="ok" ajax="false" />
+								
+							<b:commandButton ajax="false" value="#{msgs['button.cancel']}" action="/index.faces?faces-redirect=true"  icon="remove"/>
+							
 						</ui:decorate>
-					</h:panelGroup>
 
-					<h:panelGroup id="emailField">
-						<ui:decorate template="/resources/formfield.xhtml">
-							<ui:param name="fieldName" value="form:email" />
-							<ui:define name="label">
-								<h:outputText value="#{msgs['field.email']}" />
-							</ui:define>
-							<b:inputText id="name"
-								value="#{manageRegisterController.email}" size="30"
-								required="true" style="width:300px;">
-								<p:ajax event="blur" update="emailField" />
-							</b:inputText>
-						</ui:decorate>
-					</h:panelGroup>
+					</h:form>
+				</ui:decorate>
+			</h:panelGroup>
+		</div>
 
-					<h:panelGroup id="usernameField">
-						<ui:decorate template="/resources/formfield.xhtml">
-							<ui:param name="fieldName" value="form:username" />
-							<ui:define name="label">
-								<h:outputText value="#{msgs['field.username']}" />
-							</ui:define>
-							<b:inputText id="username"
-								value="#{manageRegisterController.username}" size="30"
-								required="true" style="width:300px;">
-								<p:ajax event="blur" update="usernameField" />
-							</b:inputText>
-						</ui:decorate>
-					</h:panelGroup>
-
-					<h:panelGroup id="passwordField">
-						<ui:decorate template="/resources/formfield.xhtml">
-							<ui:param name="fieldName" value="form:password" />
-							<ui:define name="label">
-								<h:outputText value="#{msgs['field.password']}" />
-							</ui:define>
-							<p:password id="password"
-								value="#{manageRegisterController.password}" size="15"
-								required="true" feedback="false" />
-						</ui:decorate>
-					</h:panelGroup>
-
-					<h1></h1>
-
-					<ui:decorate template="/resources/formbutton.xhtml">
-						<b:commandButton action="#{manageRegisterController.register}"
-							value="#{msgs['button.register']}" icon="buttonOk"
-							update=":globalMessages form" />
-					</ui:decorate>
-
-				</h:form>
-			</ui:decorate>
-		</h:panelGroup>
-	</div>
-
+	</ui:define>
 
 </ui:composition>

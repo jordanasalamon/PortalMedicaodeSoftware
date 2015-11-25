@@ -8,7 +8,7 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport_;
 @StaticMetamodel(Term.class)
 public class Term_ extends PersistentObjectSupport_ {
 
-	public static volatile SingularAttribute<Term, String> Name;
-	public static volatile SingularAttribute<Term, String> Description;
+	public static volatile SingularAttribute<Term, String> name;
+	public static volatile SingularAttribute<Term, String> description;
 
 }
