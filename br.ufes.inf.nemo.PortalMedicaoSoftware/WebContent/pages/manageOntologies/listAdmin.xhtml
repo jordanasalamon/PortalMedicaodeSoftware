@@ -36,18 +36,53 @@
             <!-- The listing form. -->
             <h:form id="listingForm">
                 <!-- Filter information (displayed when the listing is being filtered. -->
-              <!--   <h:panelGroup id="filterInfo" rendered="#{manageOntologiesController.filtering}">
+                <h:panelGroup id="filterInfo" rendered="#{manageOntologiesController.filtering}">
                     <div class="crudFilterInfo">
                         <h:outputFormat value="#{msgs['crud.text.filterInfo']} ">
                             <f:param value="#{manageOntologiesController.filter.label}" />
                             <f:param value="#{manageOntologiesController.filterLabel}" />
                         </h:outputFormat>
                         <p:commandLink action="#{manageOntologiesController.cancelFilter}" process="@form" update="@form :buttonsForm">
-                            <h:graphicImage style="border: 0;" value="/resources/templates/default/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
+                            <h:graphicImage style="border: 0;" value="/resources/bootstrap/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
                         </p:commandLink>
                         <p:hotkey bind="#{msgs['crud.hotkey.clearFilter']}" action="#{manageOntologiesController.cancelFilter}" process="@form" update=":listingForm :buttonsForm" />
                     </div>
-                </h:panelGroup> -->
+                </h:panelGroup> 
+
+
+
+                <!-- The list of entities. -->
+                <h:panelGroup id="listing" styleClass="listing">
+                    <p:dataTable
+                        widgetVar="listingTable"
+                        value="#{manageOntologiesController.lazyEntities}" 
+                        var="entity" 
+                        rows="#{manageOntologiesController.maxDataTableRowsPerPage}" 
+                        rowsPerPageTemplate="#{manageOntologiesController.halfMaxDataTableRowsPerPage},#{manageOntologiesController.maxDataTableRowsPerPage},#{manageOntologiesController.doubleMaxDataTableRowsPerPage}"
+                        lazy="true" 
+                        paginator="true" 
+                        selection="#{manageOntologiesController.selectedEntity}" 
+                        selectionMode="single" 
+                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+                        paginatorPosition="bottom" 
+                        emptyMessage="#{manageOntologiesController.filtering ? msgs['manageOntologies.text.noEntitiesFiltered'] : msgs['manageOntologies.text.noEntities']}">
+
+                        <p:column headerText="#{msgs['manageOntologies.form.name']}">
+                            <h:outputText value="#{entity.name}" />
+                        </p:column>
+
+                        <p:column headerText="#{msgs['manageOntologies.form.link']}">
+                            <h:outputText value="#{entity.link}" />
+                        </p:column>
+
+                        <p:ajax event="rowSelect" update=":buttonsForm" />
+                    </p:dataTable>
+                    <p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+                    <p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+                    <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+                    <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
+                </h:panelGroup>
+            </h:form>
 
             <!-- Buttons shown below the listing. -->
             <h:form id="buttonsForm">
@@ -82,40 +117,6 @@
                     <p:hotkey bind="#{msgs['crud.hotkey.update']}" action="#{manageOntologiesController.update}" rendered="#{manageOntologiesController.selectedEntity != null}" />
                     <p:hotkey bind="#{msgs['crud.hotkey.delete']}" action="#{manageOntologiesController.trash}" rendered="#{manageOntologiesController.selectedEntity != null}" process="@this" update=":trashForm" />
                 </div>
-            </h:form>
-
-
-                <!-- The list of entities. -->
-                <h:panelGroup id="listing" styleClass="listing">
-                    <p:dataTable
-                        widgetVar="listingTable"
-                        value="#{manageOntologiesController.lazyEntities}" 
-                        var="entity" 
-                        rows="#{manageOntologiesController.maxDataTableRowsPerPage}" 
-                        rowsPerPageTemplate="#{manageOntologiesController.halfMaxDataTableRowsPerPage},#{manageOntologiesController.maxDataTableRowsPerPage},#{manageOntologiesController.doubleMaxDataTableRowsPerPage}"
-                        lazy="true" 
-                        paginator="true" 
-                        selection="#{manageOntologiesController.selectedEntity}" 
-                        selectionMode="single" 
-                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
-                        paginatorPosition="bottom" 
-                        emptyMessage="#{manageOntologiesController.filtering ? msgs['manageOntologies.text.noEntitiesFiltered'] : msgs['manageOntologies.text.noEntities']}">
-
-                        <p:column headerText="#{msgs['manageOntologies.form.name']}">
-                            <h:outputText value="#{entity.name}" />
-                        </p:column>
-
-                        <p:column headerText="#{msgs['manageOntologies.form.link']}">
-                            <h:outputText value="#{entity.link}" />
-                        </p:column>
-
-                        <p:ajax event="rowSelect" update=":buttonsForm" />
-                    </p:dataTable>
-                    <p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
-                    <p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
-                    <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
-                    <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
-                </h:panelGroup>
             </h:form>
 
 

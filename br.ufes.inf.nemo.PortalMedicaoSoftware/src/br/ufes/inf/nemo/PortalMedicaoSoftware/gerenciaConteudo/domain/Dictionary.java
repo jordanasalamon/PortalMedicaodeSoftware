@@ -13,13 +13,10 @@ public class Dictionary  extends PortalItem{
 	private static final long serialVersionUID = 1L;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Term> terms;
+	private static Set<Term> terms;
 	
 	public Set<Term> getTerms() {
 		return terms;
-	}
-	public void setTerms(Set<Term> terms) {
-		this.terms = terms;
 	}
 
 }

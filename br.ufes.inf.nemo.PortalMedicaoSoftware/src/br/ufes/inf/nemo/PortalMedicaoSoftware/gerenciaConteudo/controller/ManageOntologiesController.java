@@ -1,5 +1,6 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.controller;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -35,5 +36,14 @@ public class ManageOntologiesController extends CrudController<Ontology> {
 	protected void initFilters() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void cancelFilter(){
+		
+	}
+	
+	@PostConstruct
+	public void init() {
+	    super.selectedEntity = new Ontology();
 	}
 }

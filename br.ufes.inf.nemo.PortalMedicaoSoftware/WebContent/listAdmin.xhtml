@@ -36,60 +36,18 @@
             <!-- The listing form. -->
             <h:form id="listingForm">
                 <!-- Filter information (displayed when the listing is being filtered. -->
-                <h:panelGroup id="filterInfo" rendered="#{managePublicationsController.filtering}">
+              <!--   <h:panelGroup id="filterInfo" rendered="#{managePublicationsController.filtering}">
                     <div class="crudFilterInfo">
                         <h:outputFormat value="#{msgs['crud.text.filterInfo']} ">
                             <f:param value="#{managePublicationsController.filter.label}" />
                             <f:param value="#{managePublicationsController.filterLabel}" />
                         </h:outputFormat>
                         <p:commandLink action="#{managePublicationsController.cancelFilter}" process="@form" update="@form :buttonsForm">
-                            <h:graphicImage style="border: 0;" value="/resources/bootstrap/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
+                            <h:graphicImage style="border: 0;" value="/resources/templates/default/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
                         </p:commandLink>
                         <p:hotkey bind="#{msgs['crud.hotkey.clearFilter']}" action="#{managePublicationsController.cancelFilter}" process="@form" update=":listingForm :buttonsForm" />
                     </div>
-                </h:panelGroup> 
-
-
-                <!-- The list of entities. -->
-                <h:panelGroup id="listing" styleClass="listing">
-                    <p:dataTable
-                        widgetVar="listingTable"
-                        value="#{managePublicationsController.lazyEntities}" 
-                        var="entity" 
-                        rows="#{managePublicationsController.maxDataTableRowsPerPage}" 
-                        rowsPerPageTemplate="#{managePublicationsController.halfMaxDataTableRowsPerPage},#{managePublicationsController.maxDataTableRowsPerPage},#{managePublicationsController.doubleMaxDataTableRowsPerPage}"
-                        lazy="true" 
-                        paginator="true" 
-                        selection="#{managePublicationsController.selectedEntity}" 
-                        selectionMode="single" 
-                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
-                        paginatorPosition="bottom" 
-                        emptyMessage="#{managePublicationsController.filtering ? msgs['managePublications.text.noEntitiesFiltered'] : msgs['managePublications.text.noEntities']}">
-
-                        <p:column headerText="#{msgs['managePublications.form.title']}">
-                            <h:outputText value="#{entity.title}" />
-                        </p:column>
-
-						<p:column headerText="#{msgs['managePublications.form.year']}">
-                            <h:outputText value="#{entity.year}" />
-                        </p:column>
-                        
-                        <p:column headerText="#{msgs['managePublications.form.publicationType']}">
-                            <h:outputText value="#{entity.type}" />
-                        </p:column>
-
-						<p:column headerText="#{msgs['managePublications.form.isByNemo']}">
-                            <h:outputText value="#{entity.isByNemo}" />
-                        </p:column>
-
-                        <p:ajax event="rowSelect" update=":buttonsForm" />
-                    </p:dataTable>
-                    <p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
-                    <p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
-                    <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
-                    <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
-                </h:panelGroup>
-            </h:form>
+                </h:panelGroup> -->
 
             <!-- Buttons shown below the listing. -->
             <h:form id="buttonsForm">
@@ -126,6 +84,47 @@
                 </div>
             </h:form>
 
+
+                <!-- The list of entities. -->
+                <h:panelGroup id="listing" styleClass="listing">
+                    <p:dataTable
+                        widgetVar="listingTable"
+                        value="#{managePublicationsController.lazyEntities}" 
+                        var="entity" 
+                        rows="#{managePublicationsController.maxDataTableRowsPerPage}" 
+                        rowsPerPageTemplate="#{managePublicationsController.halfMaxDataTableRowsPerPage},#{managePublicationsController.maxDataTableRowsPerPage},#{managePublicationsController.doubleMaxDataTableRowsPerPage}"
+                        lazy="true" 
+                        paginator="true" 
+                        selection="#{managePublicationsController.selectedEntity}" 
+                        selectionMode="single" 
+                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+                        paginatorPosition="bottom" 
+                        emptyMessage="#{managePublicationsController.filtering ? msgs['managePublications.text.noEntitiesFiltered'] : msgs['managePublications.text.noEntities']}">
+
+                        <p:column headerText="#{msgs['managePublications.form.title']}">
+                            <h:outputText value="#{entity.title}" />
+                        </p:column>
+
+                        <p:column headerText="#{msgs['managePublications.form.isByNemo']}">
+                            <h:outputText value="#{entity.isByNemo}" />
+                        </p:column>
+
+						<p:column headerText="#{msgs['managePublications.form.year']}">
+                            <h:outputText value="#{entity.year}" />
+                        </p:column>
+                        
+                        <p:column headerText="#{msgs['managePublications.form.publicationType']}">
+                            <h:outputText value="#{entity.type}" />
+                        </p:column>
+
+                        <p:ajax event="rowSelect" update=":buttonsForm" />
+                    </p:dataTable>
+                    <p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+                    <p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+                    <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+                    <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
+                </h:panelGroup>
+            </h:form>
 
 
             <!-- The trash panel: shows entities that have been selected for deletion. -->

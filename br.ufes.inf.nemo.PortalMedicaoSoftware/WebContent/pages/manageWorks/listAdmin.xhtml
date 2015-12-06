@@ -36,54 +36,20 @@
             <!-- The listing form. -->
             <h:form id="listingForm">
                 <!-- Filter information (displayed when the listing is being filtered. -->
-              <!--   <h:panelGroup id="filterInfo" rendered="#{manageAnotherWorksController.filtering}">
+                 <h:panelGroup id="filterInfo" rendered="#{manageAnotherWorksController.filtering}">
                     <div class="crudFilterInfo">
                         <h:outputFormat value="#{msgs['crud.text.filterInfo']} ">
                             <f:param value="#{manageAnotherWorksController.filter.label}" />
                             <f:param value="#{manageAnotherWorksController.filterLabel}" />
                         </h:outputFormat>
                         <p:commandLink action="#{manageAnotherWorksController.cancelFilter}" process="@form" update="@form :buttonsForm">
-                            <h:graphicImage style="border: 0;" value="/resources/templates/default/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
+                            <h:graphicImage style="border: 0;" value="/resources/bootstrap/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
                         </p:commandLink>
                         <p:hotkey bind="#{msgs['crud.hotkey.clearFilter']}" action="#{manageAnotherWorksController.cancelFilter}" process="@form" update=":listingForm :buttonsForm" />
                     </div>
-                </h:panelGroup> -->
+                </h:panelGroup> 
 
-            <!-- Buttons shown below the listing. -->
-            <h:form id="buttonsForm">
-                <div class="crudButtons">
-                    <p:commandButton 
-                        action="#{manageAnotherWorksController.create}" 
-                        value="#{msgs['crud.button.create']}"
-                        icon="buttonNew"
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageAnotherWorksController.retrieve}" 
-                        value="#{msgs['crud.button.retrieve']}" 
-                        icon="buttonView" 
-                        disabled="#{manageAnotherWorksController.selectedEntity == null}" 
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageAnotherWorksController.update}"
-                        value="#{msgs['crud.button.update']}" 
-                        icon="buttonEdit" 
-                        disabled="#{manageAnotherWorksController.selectedEntity == null}"
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageAnotherWorksController.trash}" 
-                        value="#{msgs['crud.button.delete']}" 
-                        icon="buttonTrash"
-                        disabled="#{manageAnotherWorksController.selectedEntity == null}" 
-                        process="@this" 
-                        update=":trashForm"
-                        styleClass="btn-list btn"/>
-                    <p:hotkey bind="#{msgs['crud.hotkey.create']}" action="#{manageAnotherWorksController.create}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.retrieve']}" action="#{manageAnotherWorksController.retrieve}" rendered="#{manageAnotherWorksController.selectedEntity != null}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.update']}" action="#{manageAnotherWorksController.update}" rendered="#{manageAnotherWorksController.selectedEntity != null}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.delete']}" action="#{manageAnotherWorksController.trash}" rendered="#{manageAnotherWorksController.selectedEntity != null}" process="@this" update=":trashForm" />
-                </div>
-            </h:form>
-
+           
 
                 <!-- The list of entities. -->
                 <h:panelGroup id="listing" styleClass="listing">
@@ -120,6 +86,41 @@
                     <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
                     <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
                 </h:panelGroup>
+            </h:form>
+
+ <!-- Buttons shown below the listing. -->
+            <h:form id="buttonsForm">
+                <div class="crudButtons">
+                    <p:commandButton 
+                        action="#{manageAnotherWorksController.create}" 
+                        value="#{msgs['crud.button.create']}"
+                        icon="buttonNew"
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageAnotherWorksController.retrieve}" 
+                        value="#{msgs['crud.button.retrieve']}" 
+                        icon="buttonView" 
+                        disabled="#{manageAnotherWorksController.selectedEntity == null}" 
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageAnotherWorksController.update}"
+                        value="#{msgs['crud.button.update']}" 
+                        icon="buttonEdit" 
+                        disabled="#{manageAnotherWorksController.selectedEntity == null}"
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageAnotherWorksController.trash}" 
+                        value="#{msgs['crud.button.delete']}" 
+                        icon="buttonTrash"
+                        disabled="#{manageAnotherWorksController.selectedEntity == null}" 
+                        process="@this" 
+                        update=":trashForm"
+                        styleClass="btn-list btn"/>
+                    <p:hotkey bind="#{msgs['crud.hotkey.create']}" action="#{manageAnotherWorksController.create}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.retrieve']}" action="#{manageAnotherWorksController.retrieve}" rendered="#{manageAnotherWorksController.selectedEntity != null}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.update']}" action="#{manageAnotherWorksController.update}" rendered="#{manageAnotherWorksController.selectedEntity != null}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.delete']}" action="#{manageAnotherWorksController.trash}" rendered="#{manageAnotherWorksController.selectedEntity != null}" process="@this" update=":trashForm" />
+                </div>
             </h:form>
 
 

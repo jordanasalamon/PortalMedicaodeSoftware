@@ -36,54 +36,20 @@
             <!-- The listing form. -->
             <h:form id="listingForm">
                 <!-- Filter information (displayed when the listing is being filtered. -->
-              <!--   <h:panelGroup id="filterInfo" rendered="#{manageToolsController.filtering}">
+                 <h:panelGroup id="filterInfo" rendered="#{manageToolsController.filtering}">
                     <div class="crudFilterInfo">
                         <h:outputFormat value="#{msgs['crud.text.filterInfo']} ">
                             <f:param value="#{manageToolsController.filter.label}" />
                             <f:param value="#{manageToolsController.filterLabel}" />
                         </h:outputFormat>
                         <p:commandLink action="#{manageToolsController.cancelFilter}" process="@form" update="@form :buttonsForm">
-                            <h:graphicImage style="border: 0;" value="/resources/templates/default/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
+                            <h:graphicImage style="border: 0;" value="/resources/bootstrap/icons/button-close.png" title="#{msgs['crud.button.cancelFilter']}" />
                         </p:commandLink>
                         <p:hotkey bind="#{msgs['crud.hotkey.clearFilter']}" action="#{manageToolsController.cancelFilter}" process="@form" update=":listingForm :buttonsForm" />
                     </div>
-                </h:panelGroup> -->
+                </h:panelGroup> 
 
-            <!-- Buttons shown below the listing. -->
-            <h:form id="buttonsForm">
-                <div class="crudButtons">
-                    <p:commandButton 
-                        action="#{manageToolsController.create}" 
-                        value="#{msgs['crud.button.create']}"
-                        icon="buttonNew"
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageToolsController.retrieve}" 
-                        value="#{msgs['crud.button.retrieve']}" 
-                        icon="buttonView" 
-                        disabled="#{manageToolsController.selectedEntity == null}" 
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageToolsController.update}"
-                        value="#{msgs['crud.button.update']}" 
-                        icon="buttonEdit" 
-                        disabled="#{manageToolsController.selectedEntity == null}"
-                        styleClass="btn-list btn"/>
-                    <p:commandButton 
-                        action="#{manageToolsController.trash}" 
-                        value="#{msgs['crud.button.delete']}" 
-                        icon="buttonTrash"
-                        disabled="#{manageToolsController.selectedEntity == null}" 
-                        process="@this" 
-                        update=":trashForm"
-                        styleClass="btn-list btn"/>
-                    <p:hotkey bind="#{msgs['crud.hotkey.create']}" action="#{manageToolsController.create}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.retrieve']}" action="#{manageToolsController.retrieve}" rendered="#{manageToolsController.selectedEntity != null}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.update']}" action="#{manageToolsController.update}" rendered="#{manageToolsController.selectedEntity != null}" />
-                    <p:hotkey bind="#{msgs['crud.hotkey.delete']}" action="#{manageToolsController.trash}" rendered="#{manageToolsController.selectedEntity != null}" process="@this" update=":trashForm" />
-                </div>
-            </h:form>
-
+            
 
                 <!-- The list of entities. -->
                 <h:panelGroup id="listing" styleClass="listing">
@@ -116,6 +82,41 @@
                     <p:hotkey bind="right" handler="goToNextPage(listingTable);" />
                     <p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
                 </h:panelGroup>
+            </h:form>
+
+<!-- Buttons shown below the listing. -->
+            <h:form id="buttonsForm">
+                <div class="crudButtons">
+                    <p:commandButton 
+                        action="#{manageToolsController.create}" 
+                        value="#{msgs['crud.button.create']}"
+                        icon="buttonNew"
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageToolsController.retrieve}" 
+                        value="#{msgs['crud.button.retrieve']}" 
+                        icon="buttonView" 
+                        disabled="#{manageToolsController.selectedEntity == null}" 
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageToolsController.update}"
+                        value="#{msgs['crud.button.update']}" 
+                        icon="buttonEdit" 
+                        disabled="#{manageToolsController.selectedEntity == null}"
+                        styleClass="btn-list btn"/>
+                    <p:commandButton 
+                        action="#{manageToolsController.trash}" 
+                        value="#{msgs['crud.button.delete']}" 
+                        icon="buttonTrash"
+                        disabled="#{manageToolsController.selectedEntity == null}" 
+                        process="@this" 
+                        update=":trashForm"
+                        styleClass="btn-list btn"/>
+                    <p:hotkey bind="#{msgs['crud.hotkey.create']}" action="#{manageToolsController.create}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.retrieve']}" action="#{manageToolsController.retrieve}" rendered="#{manageToolsController.selectedEntity != null}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.update']}" action="#{manageToolsController.update}" rendered="#{manageToolsController.selectedEntity != null}" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.delete']}" action="#{manageToolsController.trash}" rendered="#{manageToolsController.selectedEntity != null}" process="@this" update=":trashForm" />
+                </div>
             </h:form>
 
 

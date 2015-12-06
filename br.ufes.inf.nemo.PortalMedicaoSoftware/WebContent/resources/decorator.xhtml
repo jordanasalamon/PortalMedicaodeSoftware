@@ -32,23 +32,23 @@
 	<b:container fluid="true">
 		<b:row>
 
-			<b:column col-sm="3" col-md="2" styleClass="sidebar" rendered="#{manageUserController.loggedIn}">
-                    <b:listLinks rendered="#{manageUserController.user}">
-                        <b:navLink href="/home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
-                        <b:navLink href="/managePublications/list.faces" value="#{msgs['menu.manage.publications']}" />
-                        <b:navLink href="/manageTerms/list.faces" value="#{msgs['menu.manage.dictionary']}" />
-                        <b:navLink href="/manageOntologies/list.faces" value="#{msgs['menu.manage.ontologies']}" />
-                        <b:navLink href="/manageTools/list.faces" value="#{msgs['menu.manage.tools']}" />
-                        <b:navLink href="/manageWorks/list.faces" value="#{msgs['menu.manage.works']}" />
-                        <b:navLink href="/manageContacts/list.faces" value="#{msgs['menu.manage.contacts']}" />
+			<b:column col-sm="3" col-md="2" styleClass="sidebar" >
+                    <b:listLinks >
+                        <b:navLink href="home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
+                        <b:navLink href="/pages/managePublications/list.faces" value="#{msgs['menu.manage.publications']}" />
+                        <b:navLink href="/pages/manageTerms/list.faces" value="#{msgs['menu.manage.dictionary']}" />
+                        <b:navLink href="/pages/manageOntologies/list.faces" value="#{msgs['menu.manage.ontologies']}" />
+                        <b:navLink href="/pages/manageTools/list.faces" value="#{msgs['menu.manage.tools']}" />
+                        <b:navLink href="/pages/manageWorks/list.faces" value="#{msgs['menu.manage.works']}" />
+                        <b:navLink href="/pages/manageContacts/list.faces" value="#{msgs['menu.manage.contacts']}" />
                     </b:listLinks>
-                    <b:listLinks rendered="#{manageUserController.admin}">
-                    	<b:navLink href="/home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
-                        <b:navLink href="/managePublications/listAdmin.faces" value="#{msgs['menu.manage.publications']}"/>
-                        <b:navLink href="/manageTerms/listAdmin.faces" value="#{msgs['menu.manage.dictionary']}" />
-                        <b:navLink href="/manageOntologies/listAdmin.faces" value="#{msgs['menu.manage.ontologies']}" />
-                        <b:navLink href="/manageTools/listAdmin.faces" value="#{msgs['menu.manage.tools']}" />
-                        <b:navLink href="/manageWorks/listAdmin.faces" value="#{msgs['menu.manage.works']}" />
+                    <b:listLinks >
+                    	<b:navLink href="home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
+                        <b:navLink href="/pages/managePublications/listAdmin.faces" value="#{msgs['menu.manage.publications']}"/>
+                        <b:navLink href="/pages/manageTerms/listAdmin.faces" value="#{msgs['menu.manage.dictionary']}" />
+                        <b:navLink href="/pages/manageOntologies/listAdmin.faces" value="#{msgs['menu.manage.ontologies']}" />
+                        <b:navLink href="/pages/manageTools/listAdmin.faces" value="#{msgs['menu.manage.tools']}" />
+                        <b:navLink href="/pages/manageWorks/listAdmin.faces" value="#{msgs['menu.manage.works']}" />
                     </b:listLinks>
                 </b:column>
 
