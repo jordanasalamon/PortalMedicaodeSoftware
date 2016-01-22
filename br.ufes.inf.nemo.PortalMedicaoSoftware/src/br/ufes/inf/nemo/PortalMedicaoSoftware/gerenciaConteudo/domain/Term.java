@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
 @Entity
-public class Term  extends PersistentObjectSupport{
+public class Term  extends PersistentObjectSupport implements Comparable<Term>{
 	
 	private static final long serialVersionUID = 1L;
     @Size(max = 150)
@@ -24,6 +24,10 @@ public class Term  extends PersistentObjectSupport{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	@Override
+	public int compareTo(Term o) {
+		return this.name.compareTo(o.getName());
 	}
 
 		

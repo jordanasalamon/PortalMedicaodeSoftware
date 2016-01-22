@@ -21,7 +21,9 @@ public class ManageUsersController extends CrudController<User> {
 	private User currentUser;
 	private String currentUserLogin;
 	private String currentUserPassword;
-
+	
+	private User currentAdmin;
+	
 	@Override
 	protected CrudService<User> getCrudService() {
 		return manageUsersService;
@@ -71,11 +73,17 @@ public class ManageUsersController extends CrudController<User> {
 	}
 
 	public boolean isAdmin() {
-		return currentUser.getIsAdmin() == true;
+		if(currentUser.getIsAdmin() == true){
+			return true;
+		}
+		return false; 
 	}
 	
 	public boolean isUser(){
-		return currentUser.getIsAdmin() == false;
+		if(currentUser.getIsAdmin() == false){
+			return true;
+		}
+		return false;
 	}
 
 	public String getLoginName() {
@@ -107,5 +115,13 @@ public class ManageUsersController extends CrudController<User> {
 		currentUser = null;
 		return "/index.faces";
 	}
-	
+
+	public User getCurrentAdmin() {
+		return currentAdmin;
+	}
+
+	public void setCurrentAdmin() throws Exception {
+		this.currentAdmin = manageUsersService.getAdmin();
+	}
+
 }

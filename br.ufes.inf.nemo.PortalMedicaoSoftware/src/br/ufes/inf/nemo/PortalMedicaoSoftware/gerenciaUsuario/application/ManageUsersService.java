@@ -9,5 +9,6 @@ import br.ufes.inf.nemo.util.ejb3.application.CrudService;
 public interface ManageUsersService extends CrudService<User> {
 
 	public User login(String username, String password) throws Exception;
+	public User getAdmin() throws Exception;
 
 }

@@ -2,6 +2,7 @@ package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
@@ -19,7 +20,9 @@ public class Contact extends PersistentObjectSupport {
 	private boolean isAnswered;
 	private Date answerDate;
 	private String answerMessage;
+	@Column(columnDefinition = "LONGBLOB")
 	private User sender;
+	@Column(columnDefinition = "LONGBLOB")
 	private User receiver;
 	
 	public String getMessageSubject() {

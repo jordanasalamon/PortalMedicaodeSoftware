@@ -61,10 +61,10 @@
 
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{manageUsersController.login}"
-								value="#{msgs['button.login']}" update=":globalMessages form" ajax="false" />
-							<h2></h2>
+								value="#{msgs['button.login']}" update=":globalMessages form" ajax="false" look="success" style="width:350px;"/>
+							<h4></h4>
 							<b:button id="registro" outcome="/pages/manageRegister/form.xhtml?faces-redirect=true" 
-								value="#{msgs['button.register']}" update=":globalMessages form" ajax="false" />
+								value="#{msgs['button.register']}" update=":globalMessages form" ajax="false" look="primary" style="width:350px;"/>
 								
 						</ui:decorate>
 					</h:form>

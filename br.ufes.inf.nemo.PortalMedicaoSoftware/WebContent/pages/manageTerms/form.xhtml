@@ -44,7 +44,7 @@
 								</ui:define>
 								<b:inputText id="name"
 									value="#{manageTermsController.selectedEntity.name}"
-									size="500" required="true" style="width:800px;"
+									size="500" required="true" style="width:500px;"
 									requiredMessage="#{msgs['crud.required.field']}">
 									<p:ajax event="blur" update="nameField" />
 								</b:inputText>
@@ -72,11 +72,11 @@
 
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{manageTermsController.save}"
-								value="#{msgs['button.save']}" update=":globalMessages form"
-								icon="ok" ajax="false" />
+								value="#{msgs['button.save']}" update=":globalMessages :form"
+								icon="ok" ajax="false" look="success" styleClass="btn-form btn"/>
 
 							<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
-								action="/index.faces?faces-redirect=true" icon="remove" />
+								action="/manageTerms/listAdmin.faces?faces-redirect=true" icon="remove" look="danger"/>
 
 						</ui:decorate>
 

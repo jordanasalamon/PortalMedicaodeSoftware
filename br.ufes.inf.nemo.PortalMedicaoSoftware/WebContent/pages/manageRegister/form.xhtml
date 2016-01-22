@@ -95,9 +95,9 @@
 
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{manageRegisterController.register}"
-								value="#{msgs['button.register']}" update=":globalMessages form" icon="ok" ajax="false" />
+								value="#{msgs['button.register']}" update=":globalMessages :form" icon="ok" ajax="false" look="success"/>
 								
-							<b:commandButton ajax="false" value="#{msgs['button.cancel']}" action="/index.faces?faces-redirect=true"  icon="remove"/>
+							<b:commandButton ajax="false" value="#{msgs['button.cancel']}" action="/index.xhtml?faces-redirect=true"  icon="remove" look="danger"/>
 							
 						</ui:decorate>
 

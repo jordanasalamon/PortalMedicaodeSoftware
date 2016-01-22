@@ -48,4 +48,19 @@ public class UserJPADAO extends
         }
         return user;
 	}
+
+	@Override
+	public User retrieveAdmin() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> root = cq.from(User.class);
+        Predicate where = cb.equal(root.get(User_.isAdmin), true);
+        cq.where(where);
+        User user = null;
+        try {
+            user = entityManager.createQuery(cq).getSingleResult();
+        } catch (RuntimeException e) {
+        }
+        return user;
+	}
 }

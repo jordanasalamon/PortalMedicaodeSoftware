@@ -19,12 +19,15 @@
 	<h:outputStylesheet name="resources/bootstrap/css/sb-admin-2.css" />
 
 
-	<b:navBar brand="NEMO" brandHref="#" inverse="true" fixed="top"
-		fluid="true">
-		
+	<b:navBar brand="" brandHref="#" inverse="false" fixed="top"
+		fluid="true" look="success">
+		<p:graphicImage value="/resources/images/nemo.gif" height="50px" width="60px"/>
             <b:navbarLinks pull="right" rendered="#{manageUsersController.loggedIn}">
-                <b:navLink value="#{manageUsersController.currentUserLogin}" href="#"></b:navLink>
-                <b:navLink value="#{msgs['navbar.logout']}" href="/index.faces" icon="off" />
+            	<b:navLink value="" rendered="#{manageUsersController.admin}" icon="envelope" href="/pages/manageContacts/list.faces"/>
+                <b:dropMenu value="#{manageUsersController.currentUserLogin}" href="#" look="success" icon="user">
+                	<b:navLink value="#{msgs['navbar.logout']}" action="#{manageUsersController.logout}" icon="off"/>
+                </b:dropMenu>
+                
             </b:navbarLinks>
 
 	</b:navBar>
@@ -32,33 +35,28 @@
 	<b:container fluid="true">
 		<b:row>
 
-			<b:column col-sm="3" col-md="2" styleClass="sidebar" >
-                    <b:listLinks >
-                        <b:navLink href="home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
-                        <b:navLink href="/pages/managePublications/list.faces" value="#{msgs['menu.manage.publications']}" />
+			<b:column col-sm="3" col-md="2" styleClass="sidebar" rendered="#{manageUsersController.loggedIn}">
+                    <b:listLinks rendered="#{manageUsersController.user}">
+                        <b:navLink href="/home.xhtml?faces-redirect=true" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
+                        <b:navLink href="/pages/managePublications/listUser.faces" value="#{msgs['menu.manage.publications']}" />
+                        <b:navLink href="/pages/manageTerms/listUser.faces" value="#{msgs['menu.manage.dictionary']}" />
+                        <b:navLink href="/pages/manageOntologies/listUser.faces" value="#{msgs['menu.manage.ontologies']}" />
+                        <b:navLink href="/pages/manageTools/listUser.faces" value="#{msgs['menu.manage.tools']}" />
+                        <b:navLink href="/pages/manageWorks/listUser.faces" value="#{msgs['menu.manage.works']}" />
+                        <b:navLink href="/pages/manageContacts/form.faces" value="#{msgs['menu.manage.contacts']}" />
+                    </b:listLinks>
+                    <b:listLinks rendered="#{manageUsersController.admin}">
+                    	<b:navLink href="/home.xhtml?faces-redirect=true" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
+                        <b:navLink href="/pages/managePublications/list.faces" value="#{msgs['menu.manage.publications']}"/>
                         <b:navLink href="/pages/manageTerms/list.faces" value="#{msgs['menu.manage.dictionary']}" />
                         <b:navLink href="/pages/manageOntologies/list.faces" value="#{msgs['menu.manage.ontologies']}" />
                         <b:navLink href="/pages/manageTools/list.faces" value="#{msgs['menu.manage.tools']}" />
                         <b:navLink href="/pages/manageWorks/list.faces" value="#{msgs['menu.manage.works']}" />
-                        <b:navLink href="/pages/manageContacts/list.faces" value="#{msgs['menu.manage.contacts']}" />
-                    </b:listLinks>
-                    <b:listLinks >
-                    	<b:navLink href="home.faces" value="#{msgs['menu.manage.home']}" active="true"/>
-                        <b:navLink href="/pages/managePublications/listAdmin.faces" value="#{msgs['menu.manage.publications']}"/>
-                        <b:navLink href="/pages/manageTerms/listAdmin.faces" value="#{msgs['menu.manage.dictionary']}" />
-                        <b:navLink href="/pages/manageOntologies/listAdmin.faces" value="#{msgs['menu.manage.ontologies']}" />
-                        <b:navLink href="/pages/manageTools/listAdmin.faces" value="#{msgs['menu.manage.tools']}" />
-                        <b:navLink href="/pages/manageWorks/listAdmin.faces" value="#{msgs['menu.manage.works']}" />
                     </b:listLinks>
                 </b:column>
 
-			<b:column col-sm="9" offset-sm="3" col-md="10" offset="2"
-				styleClass="main">
-				<h:form id="globalMessages">
-					<p:growl id="messages" globalOnly="true" showSummary="true"
-						showDetail="true" sticky="true" />
-				</h:form>
-
+			<b:column col-sm="9" col-md="10" styleClass="main">
+				
 				<!-- Page contents: -->
 				<ui:insert name="body" />
 			</b:column>

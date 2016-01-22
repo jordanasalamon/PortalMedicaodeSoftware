@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
 @Entity
-public class PortalItem  extends PersistentObjectSupport{
+public class PortalItem  extends PersistentObjectSupport implements Comparable<PortalItem>{
 	
 	private static final long serialVersionUID = 1L;
     @Size(max = 150)
@@ -24,6 +24,14 @@ public class PortalItem  extends PersistentObjectSupport{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@Override
+	public int compareTo(PortalItem arg0) {
+		int cmp = arg0.compareTo(arg0);
+	    if (cmp != 0)   return cmp;
+	    return uuid.compareTo(arg0.uuid);
+
 	}
 	
 	

@@ -13,12 +13,7 @@ public class AnotherWork extends PortalItem {
 	private String link;
 	private boolean isByNemo;
 	
-	public boolean isByNemo() {
-		return isByNemo;
-	}
-	public void setByNemo(boolean isByNemo) {
-		this.isByNemo = isByNemo;
-	}
+
 	public String getFilepath() {
 		return filepath;
 	}
@@ -30,6 +25,13 @@ public class AnotherWork extends PortalItem {
 	}
 	public void setLink(String link) {
 		this.link = link;
-	}	
+	}
+	public boolean getIsByNemo() {
+		return isByNemo;
+	}
+	public void setIsByNemo(boolean isByNemo) {
+		this.isByNemo = isByNemo;
+	}
+
 	
 }

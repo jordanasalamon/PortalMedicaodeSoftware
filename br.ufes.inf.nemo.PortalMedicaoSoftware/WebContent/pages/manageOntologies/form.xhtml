@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
 	template="/resources/decorator.xhtml">
 
 	<ui:define name="title">
@@ -14,105 +14,112 @@
 			rendered="#{(! manageOntologiesController.readOnly) and (manageOntologiesController.selectedEntity.id != null)}" />
 		<h:outputText value="#{msgs['manageOntologies.title.retrieve']}"
 			rendered="#{manageOntologiesController.readOnly}" />
-
 	</ui:define>
 
 	<ui:define name="body">
+		<h1>
+			<h:outputText value="#{msgs['manageOntologies.title.create']}"
+				rendered="#{(! manageOntologiesController.readOnly) and (manageOntologiesController.selectedEntity.id == null)}" />
+			<h:outputText value="#{msgs['manageOntologies.title.update']}"
+				rendered="#{(! manageOntologiesController.readOnly) and (manageOntologiesController.selectedEntity.id != null)}" />
+			<h:outputText value="#{msgs['manageOntologies.title.retrieve']}"
+				rendered="#{manageOntologiesController.readOnly}" />
+		</h1>
 
-		<div id="formularioCadastro">
-			<h:panelGroup>
-				<h1>
-					<h:outputText value="#{msgs['manageOntologies.title.create']}"
-						rendered="#{(! manageOntologiesController.readOnly) and (manageOntologiesController.selectedEntity.id == null)}" />
-					<h:outputText value="#{msgs['manageOntologies.title.update']}"
-						rendered="#{(! manageOntologiesController.readOnly) and (manageOntologiesController.selectedEntity.id != null)}" />
-					<h:outputText value="#{msgs['manageOntologies.title.retrieve']}"
-						rendered="#{manageOntologiesController.readOnly}" />
+		<div class="crud">
+			<ui:decorate template="/resources/form.xhtml">
+				<h:form id="form">
+					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
+						handler="findObjectById('form:name').focus();" />
 
-				</h1>
-
-				<!-- The register form. -->
-				<ui:decorate template="/resources/form.xhtml">
-					<h:form id="form">
-						<p:focus />
-
-						<h:panelGroup id="nameField">
-							<ui:decorate template="/resources/formfield.xhtml">
-								<ui:param name="fieldName" value="form:name" />
-								<ui:define name="label">
-									<h:outputText value="#{msgs['manageOntologies.form.name']}" />
-								</ui:define>
-								<b:inputText id="name"
-									value="#{manageOntologiesController.selectedEntity.name}"
-									size="500" required="true" style="width:800px;"
-									requiredMessage="#{msgs['crud.required.field']}">
-									<p:ajax event="blur" update="nameField" />
-								</b:inputText>
-							</ui:decorate>
-						</h:panelGroup>
-
-
-						<h:panelGroup id="descriptionField">
-							<ui:decorate template="/resources/formfield.xhtml">
-								<ui:param name="fieldDescription" value="form:description" />
-								<ui:define name="label">
-									<h:outputText
-										value="#{msgs['manageOntologies.form.description']}" />
-								</ui:define>
-								<h:inputTextarea id="description"
-									value="#{manageOntologiesController.selectedEntity.description}"
-									size="5000" required="true" span="6" rows="3"
-									requiredMessage="#{msgs['crud.required.field']}">
-									<p:ajax event="blur" update="descriptionField" />
-								</h:inputTextarea>
-							</ui:decorate>
-						</h:panelGroup>
-
-						<h:form enctype="multipart/form-data">
-							<p:growl id="messages" showDetail="true" />
-
-							<p:fileUpload value="#{fileUploadView.file}" mode="simple"
-								label="Selecionar" allowTypes="*.pdf;" multiple="false"
-								skinSimple="true"
-								requiredMessage="#{msgs['crud.required.field']}" />
-
-							<p:commandButton value="Submit" ajax="false"
-								actionListener="#{fileUploadView.upload}" disabled="false"/>
-						</h:form>
-
-						<h:panelGroup id="linkField">
-							<ui:decorate template="/resources/formfield.xhtml">
-								<ui:param name="fieldLink" value="form:link" />
-								<ui:define name="label">
-									<h:outputText value="#{msgs['manageOntologies.form.link']}" />
-								</ui:define>
-								<b:inputText id="link"
-									value="#{manageOntologiesController.selectedEntity.link}"
-									size="200" required="true" style="width:500px;">
-									<p:ajax event="blur" update="linkField"
-										requiredMessage="#{msgs['crud.required.field']}" />
-								</b:inputText>
-							</ui:decorate>
-						</h:panelGroup>
-
-
-						<h1></h1>
-
-						<ui:decorate template="/resources/formbutton.xhtml">
-							<b:commandButton action="#{manageOntologiesController.save}"
-								value="#{msgs['button.save']}" update=":globalMessages form"
-								icon="ok" ajax="false" />
-
-							<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
-								action="/index.faces?faces-redirect=true" icon="remove" />
-
+					<h:panelGroup id="nameField">
+						<ui:decorate template="/resources/formfield.xhtml">
+							<ui:param name="fieldName" value="form:name" />
+							<ui:define name="label">
+								<h:outputText value="#{msgs['manageOntologies.form.name']}" />
+							</ui:define>
+							<p:inputText id="name"
+								value="#{manageOntologiesController.selectedEntity.name}"
+								size="50" required="true" style="width:500px;"
+								disabled="#{manageOntologiesController.readOnly}">
+								<p:ajax event="blur" update="nameField" />
+							</p:inputText>
 						</ui:decorate>
+					</h:panelGroup>
 
-					</h:form>
-				</ui:decorate>
-			</h:panelGroup>
+					<h:panelGroup id="descriptionField">
+						<ui:decorate template="/resources/formfield.xhtml">
+							<ui:param name="fieldDescription" value="form:description" />
+							<ui:define name="label">
+								<h:outputText
+									value="#{msgs['manageOntologies.form.description']}" />
+							</ui:define>
+							<h:inputTextarea id="description"
+								value="#{manageOntologiesController.selectedEntity.description}"
+								size="5000" required="true" span="6" rows="5"
+								style="width:500px;"
+								disabled="#{manageOntologiesController.readOnly}">
+								<p:ajax event="blur" update="descriptionField" />
+							</h:inputTextarea>
+						</ui:decorate>
+					</h:panelGroup>
+
+					<h:panelGroup id="linkField">
+						<ui:decorate template="/resources/formfield.xhtml">
+							<ui:param name="fieldLink" value="form:link" />
+							<ui:define name="label">
+								<h:outputText value="#{msgs['manageOntologies.form.link']}" />
+							</ui:define>
+							<p:inputText id="link"
+								value="#{manageOntologiesController.selectedEntity.link}"
+								size="200" required="true" style="width:500px;"
+								disabled="#{manageOntologiesController.readOnly}">
+								<p:ajax event="blur" update="linkField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+
+					<ui:decorate template="/resources/formbutton.xhtml">
+						<h:panelGroup rendered="#{! manageOntologiesController.readOnly}">
+							<p:commandButton action="#{manageOntologiesController.list}"
+								value="#{msgs['crud.button.cancel']}" immediate="true"
+								icon="buttonCancel" />
+							<p:commandButton action="#{manageOntologiesController.save}"
+								value="#{msgs['crud.button.save']}" icon="buttonOk"
+								update=":form" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{manageOntologiesController.list}" immediate="true" />
+							<p:hotkey bind="#{msgs['crud.hotkey.save']}"
+								action="#{manageOntologiesController.save}"
+								update=":form " />
+						</h:panelGroup>
+						<h:panelGroup rendered="#{manageOntologiesController.readOnly}">
+							<p:commandButton action="#{manageOntologiesController.list}"
+								value="#{msgs['crud.button.back']}" immediate="true"
+								icon="buttonBack" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{manageOntologiesController.list}" immediate="true" />
+						</h:panelGroup>
+					</ui:decorate>
+				</h:form>
+			</ui:decorate>
 		</div>
-
 	</ui:define>
 
+	<ui:define name="help">
+		<h4>
+			<h:outputText value="#{msgs['text.hotkeys']}" />
+			:
+		</h4>
+		<ul>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+		</ul>
+	</ui:define>
 </ui:composition>

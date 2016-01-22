@@ -44,7 +44,7 @@
 								</ui:define>
 								<b:inputText id="name"
 									value="#{manageToolsController.selectedEntity.name}"
-									size="500" required="true" style="width:800px;"
+									size="500" required="true" style="width:500px;"
 									requiredMessage="#{msgs['crud.required.field']}">
 									<p:ajax event="blur" update="nameField" />
 								</b:inputText>
@@ -77,7 +77,7 @@
 								</ui:define>
 								<b:inputText id="link"
 									value="#{manageToolsController.selectedEntity.link}"
-									size="300" required="true" style="width:800px;"
+									size="300" required="true" style="width:500px;"
 									requiredMessage="#{msgs['crud.required.field']}">
 									<p:ajax event="blur" update="linkField" />
 								</b:inputText>
@@ -89,10 +89,10 @@
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{manageToolsController.save}"
 								value="#{msgs['button.save']}" update=":globalMessages form"
-								icon="ok" ajax="false" />
+								icon="ok" ajax="false" look="success"/>
 
 							<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
-								action="/index.faces?faces-redirect=true" icon="remove" />
+								action="/index.faces?faces-redirect=true" icon="remove" look="danger"/>
 
 						</ui:decorate>
 

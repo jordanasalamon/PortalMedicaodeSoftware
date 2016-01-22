@@ -63,8 +63,8 @@
 									required="true" styleClass="selectOne"
 									disabled="#{managePublicationsController.readOnly}"
 									converter="publicationTypeConverter"
-									requiredMessage="#{msgs['crud.required.field']}">
-									<f:selectItems value="#{PublicationTypeController.publicationTypes}" />
+									requiredMessage="#{msgs['crud.required.field']}" style="width:150px">
+									<f:selectItems value="#{publicationTypeController.publicationTypes}" />
 									<p:ajax event="blur" update="typeField" />
 								</p:selectOneMenu>
 							</ui:decorate>
@@ -77,9 +77,10 @@
 									<h:outputText value="#{msgs['managePublications.form.year']}" />
 								</ui:define>
 								<b:inputText id="year"
-									value="#{managePublicationsController.selectedEntity.year}"
+									value="#{managePublicationsController.year}"
 									size="20" disabled="false" required="true" style="width:80px;"
 									requiredMessage="#{msgs['crud.required.field']}">
+									<p:ajax event="blur" update="yearField" />
 									<f:facet name="prepend">
 										<b:iconAwesome name="calendar" />
 									</f:facet>
@@ -88,26 +89,62 @@
 						</h:panelGroup>
 
 						<h:form enctype="multipart/form-data">
-							<p:growl id="messages" showDetail="true" />
-
-							<p:fileUpload value="#{fileUploadView.file}" mode="simple"
-								skinSimple="true" label="Selecionar" allowTypes="*.pdf;"
-								multiple="false" />
-
-							<p:commandButton value="Submit" ajax="false"
-								actionListener="#{fileUploadView.upload}" disabled="false" />
+							
+							<p:fileUpload 	fileUploadListener="#{managePublicationsController.uploadAction}" auto="true" mode="advanced"
+								skinSimple="true" label="Selecionar" allowTypes="*.pdf;" required="true" update="messages" sizeLimit="100000"  
+								multiple="false" requiredMessage="#{msgs['crud.required.field']}"/>
+								<p:growl id="messages" showDetail="true" />
 						</h:form>
 
+						<h:panelGroup id="abstractField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldAbstract" value="form:abstract" />
+								<ui:define name="label">
+									<h:outputText
+										value="#{msgs['managePublications.form.abstract']}" />
+								</ui:define>
+								<h:inputTextarea id="abstract"
+									value="#{managePublicationsController.selectedEntity.abstract}"
+									size="5000" required="true" span="6" rows="5" style="width:500px;"
+									requiredMessage="#{msgs['crud.required.field']}" >
+									<!-- <p:ajax event="blur" update="abstractField" /> -->
+								</h:inputTextarea>
+							</ui:decorate>
+						</h:panelGroup>
+						
+						
+						<h:panelGroup id="referenceField">
+							<ui:decorate template="/resources/formfield.xhtml">
+								<ui:param name="fieldReference" value="form:reference" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['managePublications.form.reference']}" />
+								</ui:define>
+								<h:inputTextarea id="reference"
+									value="#{managePublicationsController.selectedEntity.reference}"
+									size="1000" required="true" span="6" rows="3" style="width:500px;"
+									requiredMessage="#{msgs['crud.required.field']}">
+									<!-- <p:ajax event="blur" update="referenceField" /> -->
+								</h:inputTextarea>
+							</ui:decorate>
+						</h:panelGroup>
+						
+
+					 	<h:form id="isByNemo" requiredMessage="#{msgs['crud.required.field']}" required="true">
+							<b:selectBooleanCheckbox value="#{managePublicationsController.nemo}"
+								caption="NEMO" />
+							<b:selectBooleanCheckbox value="#{managePublicationsController.outro}"
+								caption="Outro" />	
+						</h:form> 
 
 						<h1></h1>
 
 						<ui:decorate template="/resources/formbutton.xhtml">
 							<b:commandButton action="#{managePublicationsController.save}"
-								value="#{msgs['button.save']}" update=":globalMessages form"
-								icon="ok" ajax="false" />
+								value="#{msgs['button.save']}" update=":globalMessages form" look="success"
+								icon="ok" ajax="true" style="width:200px;"/>
 
 							<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
-								action="/index.faces?faces-redirect=true" icon="remove" />
+								action="#{managePublicationsController.list}" icon="remove" look="danger"/>
 
 						</ui:decorate>
 

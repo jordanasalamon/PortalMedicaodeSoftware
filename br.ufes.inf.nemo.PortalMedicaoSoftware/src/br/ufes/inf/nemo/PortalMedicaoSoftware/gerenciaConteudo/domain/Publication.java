@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Publication extends PortalItem {
+public class Publication extends PortalItem{
 
 	/**
 	 * 
@@ -76,6 +76,4 @@ public class Publication extends PortalItem {
 	public void setIsByNemo(Boolean isByNemo) {
 		this.isByNemo = isByNemo;
 	}
-		
-	
 }

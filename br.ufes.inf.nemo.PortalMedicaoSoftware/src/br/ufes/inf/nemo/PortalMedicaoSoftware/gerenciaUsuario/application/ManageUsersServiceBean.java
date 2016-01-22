@@ -45,5 +45,18 @@ public class ManageUsersServiceBean extends CrudServiceBean<User> implements
 		}
 		return null;
 	}
+	
+	public User getAdmin(){
+		try{
+			User user = userDAO.retrieveAdmin();
+			if(user != null){
+				return user;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
