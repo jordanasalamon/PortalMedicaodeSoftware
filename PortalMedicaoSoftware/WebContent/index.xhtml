@@ -1,27 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui"
-                template="/resources/templates/default/decoratorLogin.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decoratorLogin.xhtml">
 
-    <ui:define name="title"><h:outputText value="#{msgs['title.home']}" /></ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{msgs['title.login']}" />
+	</ui:define>
 
-    <ui:define name="body">
-        <h1><h:outputText value="#{msgs['title.home']}" /></h1>
+	<ui:define name="body">
 
-        <p>Try the <h:link outcome="manageTools/list" value="Manage Tools" /> feature.</p>
-        <p>Try the <h:link outcome="manageTerms/list" value="Manage Terms" /> feature.</p>
-        <p>Try the <h:link outcome="managePublications/list" value="Manage Publications" /> feature.</p>
-        <p>Try the <h:link outcome="manageOntologies/list" value="Manage Ontologies" /> feature.</p>
-        <p>Try the <h:link outcome="manageAnotherWorks/list" value="Manage AnotherWorks" /> feature.</p>
-        <p>Try the <h:link outcome="manageRegisters/form" value="Manage Registers" /> feature.</p>
-        <p>Try the <h:link outcome="manageContacts/list" value="Manage Contacts" /> feature.</p>
-        
-				
-        
-    </ui:define>
+		<div id="formularioLogin">
+			<h:panelGroup rendered="#{manageUsersController.beforeLogin()}">
+				<h1>
+					<h:outputText value="#{msgs['title.login']}" />
+				</h1>
+
+				<!-- The login form. -->
+				<ui:decorate template="/resources/templates/default/form.xhtml">
+					<h:form id="form">
+						<p:focus />
+
+						<h:panelGroup id="usernameField">
+							<ui:decorate template="/resources/templates/default/formfield.xhtml">
+								<ui:param name="fieldName" value="form:username" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['field.username']}" />
+								</ui:define>
+								<b:inputText id="username"
+									value="#{manageUsersController.currentUserLogin}" size="30"
+									required="true" style="width:300px;">
+									<p:ajax event="blur" update="usernameField" />
+									<f:facet name="prepend">
+                                    <b:iconAwesome name="user" />
+                                	</f:facet>
+								</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+						<h:panelGroup id="passwordField">
+							<ui:decorate template="/resources/templates/default/formfield.xhtml">
+								<ui:param name="fieldName" value="form:password" />
+								<ui:define name="label">
+									<h:outputText value="#{msgs['field.password']}" />
+								</ui:define>
+								<b:inputText id="password" type="password"
+									value="#{manageUsersController.currentUserPassword}" size="15" style="width:300px;"
+									required="true" feedback="false" >
+									<f:facet name="prepend">
+                                    <b:iconAwesome name="key" />
+                                	</f:facet>
+                                	</b:inputText>
+							</ui:decorate>
+						</h:panelGroup>
+
+						<h1></h1>
+
+						<ui:decorate template="/resources/templates/default/formbutton.xhtml">
+							<b:commandButton action="#{manageUsersController.login}"
+								value="#{msgs['button.login']}" update=":globalMessages form" ajax="false" look="success" style="width:350px;"/>
+							<h4></h4>
+							<b:button id="registro" outcome="/pages/manageRegister/form.xhtml?faces-redirect=true" 
+								value="#{msgs['button.register']}" update=":globalMessages form" ajax="false" look="primary" style="width:350px;"/>
+								
+						</ui:decorate>
+					</h:form>
+				</ui:decorate>
+			</h:panelGroup>
+		</div>
+		<h:panelGroup rendered="#{manageUsersController.loggedIn}">
+			<p>
+				<h:outputFormat value="#{msgs['text.login.success']}">
+					<f:param value="#{manageUsersController.currentUser.name}" />
+				</h:outputFormat>
+			</p>
+		</h:panelGroup>
+
+	</ui:define>
+
 </ui:composition>
+
