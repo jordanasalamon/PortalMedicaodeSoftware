@@ -6,7 +6,10 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 public class Publication extends PortalItem {
@@ -22,7 +25,12 @@ public class Publication extends PortalItem {
 	private String Abstract;
 	private Boolean isByNemo;
 	private PublicationType Type;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+		      name="portalitem_person",
+		      joinColumns={@JoinColumn(name="PortalItem_id", referencedColumnName="id")},
+		      inverseJoinColumns={@JoinColumn(name="Author_id", referencedColumnName="id")},
+		      uniqueConstraints={@UniqueConstraint(columnNames = {"PortalItem_id", "Author_id"})})
 	private Set<Author> Authors;
 	
 	public String getTitle() {

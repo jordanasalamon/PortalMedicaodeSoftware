@@ -11,7 +11,25 @@
 		<h:outputText value="#{msgs['title.home']}" />
 	</ui:define>
 
+
+
 	<ui:define name="body">
+
+
+		<p:notificationBar position="top" effect="slide"
+			widgetVar="announcementBar" styleClass="top"
+			rendered="#{manageContactsController.mostrarNotificacaoMensagensNaoLidas()}">
+			<p:commandLink styleClass="ui-icon ui-icon-closethick"
+				onclick="announcementBar.hide()" style="float:right" />
+			<h:outputText value="#{msgs['manageContacts.unreadMessages']}" />
+		</p:notificationBar>
+
+		<h:panelGroup
+			rendered="#{manageContactsController.mostrarNotificacaoMensagensNaoLidas()}">
+			<script type="text/javascript">jQuery (document).ready(function(){announcementBar.show();});</script>
+		</h:panelGroup>
+
+
 		<b:jumbotron>
 			<h1>Bem vindo ao Portal de Medição de Software</h1>
 			<h2>O Portal de Medição de Software é um ambiente onde
@@ -19,7 +37,7 @@
 			<h3>Projeto de Graduação - Jordana Sarmenghi Salamon</h3>
 			<h4>Departamento de Informática - Universidade Federal do
 				Espírito Santo</h4>
-			
+
 		</b:jumbotron>
 	</ui:define>
 

@@ -27,7 +27,6 @@
                     <h:panelGroup id="nameField">
                         <ui:decorate template="/resources/templates/default/formfield.xhtml">
                             <ui:param name="fieldName" value="form:name" />
-                            <ui:param name="tooltip" value="#{msgs['manageTerms.form.name.tooltip']}" />
                             <ui:define name="label"><h:outputText value="#{msgs['manageTerms.form.name']}" /></ui:define>
                             <p:inputText id="name" value="#{manageTermsController.selectedEntity.name}" size="50" required="true" disabled="#{manageTermsController.readOnly}">
                                 <p:ajax event="blur" update="nameField" />
@@ -38,14 +37,13 @@
                     <h:panelGroup id="descriptionField">
 							<ui:decorate template="/resources/templates/default/formfield.xhtml">
 								<ui:param name="fieldDescription" value="form:description" />
-								<ui:param name="tooltip" value="#{msgs['manageTerms.form.name.tooltip']}" />
 								<ui:define name="label">
 									<h:outputText
 										value="#{msgs['manageTerms.form.description']}" />
 								</ui:define>
 								<h:inputTextarea id="description"
 									value="#{manageTermsController.selectedEntity.description}"
-									size="5000" required="true" span="6" rows="3"
+									size="5000" required="true" span="6" rows="3" style="width:500px;"
 									requiredMessage="#{msgs['crud.required.field']}">
 									<p:ajax event="blur" update="descriptionField" />
 								</h:inputTextarea>

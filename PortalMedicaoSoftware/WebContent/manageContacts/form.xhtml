@@ -4,43 +4,85 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/templates/default/decorator.xhtml">
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/resources/templates/default/decorator.xhtml"
+                rendered="#{manageUsersController.admin}">
 
     <ui:define name="title">
-        <h:outputText value="#{msgs['manageContacts.title.create']}" rendered="#{(! manageContactsController.readOnly) and (manageContactsController.selectedEntity.id == null)}" />
         <h:outputText value="#{msgs['manageContacts.title.update']}" rendered="#{(! manageContactsController.readOnly) and (manageContactsController.selectedEntity.id != null)}" />
-        <h:outputText value="#{msgs['manageContacts.title.retrieve']}" rendered="#{manageContactsController.readOnly}" />
     </ui:define>
 
     <ui:define name="body">
         <h1>
-            <h:outputText value="#{msgs['manageContacts.title.create']}" rendered="#{(! manageContactsController.readOnly) and (manageContactsController.selectedEntity.id == null)}" />
             <h:outputText value="#{msgs['manageContacts.title.update']}" rendered="#{(! manageContactsController.readOnly) and (manageContactsController.selectedEntity.id != null)}" />
-            <h:outputText value="#{msgs['manageContacts.title.retrieve']}" rendered="#{manageContactsController.readOnly}" />
         </h1>
 
         <div class="crud">
             <ui:decorate template="/resources/templates/default/form.xhtml">
                 <h:form id="form">
-                    <p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}" handler="findObjectById('form:${attribute}').focus();" />
+                    <p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}" handler="findObjectById('form:messageText').focus();" />
 
-                    <h:panelGroup id="${attribute}Field">
+					<h:panelGroup id="messageSubjectField">
                         <ui:decorate template="/resources/templates/default/formfield.xhtml">
-                            <ui:param name="fieldName" value="form:${attribute}" />
-                            <ui:param name="tooltip" value="#{msgs['manageContacts.form.${attribute}.tooltip']}" />
-                            <ui:define name="label"><h:outputText value="#{msgs['manageContacts.form.${attribute}']}" /></ui:define>
-                            <p:inputText id="${attribute}" value="#{manageContactsController.selectedEntity.${attribute}}" size="50" required="true" disabled="#{manageContactsController.readOnly}">
-                                <p:ajax event="blur" update="${attribute}Field" />
+                            <ui:param name="fieldName" value="form:messageSubject" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageContacts.form.messageSubject']}" /></ui:define>
+                            <p:inputText id="messageSubject" value="#{manageContactsController.selectedEntity.messageSubject}" size="50" disabled="true">
+                                <p:ajax event="blur" update="messageSubjectField" />
                             </p:inputText>
                         </ui:decorate>
                     </h:panelGroup>
+                    
+                     <h:panelGroup id="messageDateField">
+                        <ui:decorate template="/resources/templates/default/formfield.xhtml">
+                            <ui:param name="messageDateName" value="form:messageDate" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageContacts.form.messageDate']}" /></ui:define>
+                            <b:inputText id="messageDate"
+                                         value="#{manageContactsController.selectedEntity.messageDate}" 
+                                         size="50" style="width:100px;"
+                                         disabled="true">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="calendar" />
+                                </f:facet>
+                            </b:inputText>
+                        </ui:decorate>
+                    </h:panelGroup>
+
+                    <h:panelGroup id="messageTextField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:messageText" />
+							<ui:define name="label">
+								<h:outputText value="#{msgs['manageContacts.form.messageText']}" />
+							</ui:define>
+							<h:inputTextarea id="messageText"
+								value="#{manageContactsController.selectedEntity.messageText}"
+								size="5000" span="6" rows="3" disabled="true" style="width:500px;">
+								<p:ajax event="blur" update="messageTextField" />
+							</h:inputTextarea>
+						</ui:decorate>
+					</h:panelGroup>
+					
+					  <h:panelGroup id="answerMessageField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:answerMessage" />
+							<ui:define name="label">
+								<h:outputText value="#{msgs['manageContacts.form.answerMessage']}" />
+							</ui:define>
+							<h:inputTextarea id="answerMessage"
+								value="#{manageContactsController.selectedEntity.answerMessage}"
+								size="5000" span="6" rows="3" disabled="#{manageContactsController.readOnly}" style="width:500px;">
+								<p:ajax event="blur" update="answerMessageField" />
+							</h:inputTextarea>
+						</ui:decorate>
+					</h:panelGroup>
 
                     <ui:decorate template="/resources/templates/default/formbutton.xhtml">
                         <h:panelGroup rendered="#{! manageContactsController.readOnly}">
                             <p:commandButton action="#{manageContactsController.list}" value="#{msgs['crud.button.cancel']}" immediate="true" icon="buttonCancel" />
-                            <p:commandButton action="#{manageContactsController.save}" value="#{msgs['crud.button.save']}" icon="buttonOk" update=":form :globalMessages" />
+                            <p:commandButton action="#{manageContactsController.answerContact}" value="#{msgs['crud.button.save']}" icon="buttonOk" update=":form :globalMessages" />
                             <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageContactsController.list}" immediate="true" />
-                            <p:hotkey bind="#{msgs['crud.hotkey.save']}" action="#{manageContactsController.save}" update=":form :globalMessages" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.save']}" action="#{manageContactsController.answerContact}" update=":form :globalMessages" />
                         </h:panelGroup>
                         <h:panelGroup rendered="#{manageContactsController.readOnly}">
                             <p:commandButton action="#{manageContactsController.list}" value="#{msgs['crud.button.back']}" immediate="true" icon="buttonBack" />

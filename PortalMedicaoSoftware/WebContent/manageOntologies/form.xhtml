@@ -35,8 +35,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:name" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageOntologies.form.name.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageOntologies.form.name']}" />
 							</ui:define>
@@ -52,8 +50,6 @@
 					<h:panelGroup id="descriptionField">
 						<ui:decorate template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldDescription" value="form:description" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageOntologies.form.description.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['manageOntologies.form.description']}" />
@@ -71,8 +67,6 @@
 					<h:panelGroup id="linkField">
 						<ui:decorate template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldLink" value="form:link" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageOntologies.form.link.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageOntologies.form.link']}" />
 							</ui:define>

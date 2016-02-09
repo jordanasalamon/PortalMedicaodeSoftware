@@ -4,12 +4,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/templates/default/decorator.xhtml">
+                template="/resources/templates/default/decorator.xhtml"
+                rendered="#{manageUsersController.admin}">
 
-    <ui:define name="title"><h:outputText value="#{msgs['manageContacts.title']}" /></ui:define>
+    <ui:define name="title"><h:outputText value="#{msgs['manageContacts.list.title']}" /></ui:define>
 
     <ui:define name="body">
-        <h1><h:outputText value="#{msgs['manageContacts.title']}" /></h1>
+        <h1><h:outputText value="#{msgs['manageContacts.list.title']}" /></h1>
 
         <div class="crud">
             <!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
@@ -52,7 +53,7 @@
 
                 <!-- The list of entities. -->
                 <h:panelGroup id="listing" styleClass="listing">
-                    <p:dataTable
+                    <p:dataTable 
                         widgetVar="listingTable"
                         value="#{manageContactsController.lazyEntities}" 
                         var="entity" 
@@ -73,6 +74,10 @@
                         
                         <p:column headerText="#{msgs['manageContacts.list.messageDate']}">
 							<h:outputText value="#{entity.messageDate}" />
+						</p:column>
+						
+						<p:column headerText="#{msgs['manageContacts.list.answered']}">
+							<h:outputText value="#{entity.answered}" />
 						</p:column>
 
                         <p:ajax event="rowSelect" update=":buttonsForm" />

@@ -20,12 +20,12 @@
 
 
 	<b:navBar brand="" brandHref="#" inverse="false" fixed="top"
-		fluid="true" look="success">
-		<p:graphicImage value="/resources/images/nemo.gif" height="50px" width="60px"/>
+		fluid="true">
+		<p:graphicImage value="/resources/images/nemo_transparente.png" height="70px" width="80px"/>
             <b:navbarLinks pull="right" rendered="#{manageUsersController.loggedIn}">
-            	<b:navLink value="" rendered="#{manageUsersController.admin}" icon="envelope" href="/manageContacts/list.xhtml?faces-redirect=true"/>
-                <b:dropMenu value="#{manageUsersController.currentUserLogin}" href="#" look="success" icon="user">
-                	<b:navLink value="#{msgs['navbar.logout']}" action="#{manageUsersController.logout}" icon="off"/>
+            	<b:navLink value="" rendered="#{manageUsersController.admin}" icon="envelope" href="/manageContacts/list.faces"/>
+                <b:dropMenu value="#{manageUsersController.currentUserLogin}" href="#" >
+                	<b:navLink value="#{msgs['navbar.logout']}" href="/index.faces"/>
                 </b:dropMenu>
                 
             </b:navbarLinks>
@@ -37,16 +37,16 @@
 
 			<b:column col-sm="3" col-md="2" styleClass="sidebar" rendered="#{manageUsersController.loggedIn}">
                     <b:listLinks rendered="#{manageUsersController.user}">
-                        <b:navLink href="home.xhtml?faces-redirect=true" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
+                        <b:navLink href="/home.faces" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
                         <b:navLink href="/managePublications/listUser.faces" value="#{msgs['menu.manage.publications']}" />
                         <b:navLink href="/manageTerms/listUser.faces" value="#{msgs['menu.manage.dictionary']}" />
                         <b:navLink href="/manageOntologies/listUser.faces" value="#{msgs['menu.manage.ontologies']}" />
                         <b:navLink href="/manageTools/listUser.faces" value="#{msgs['menu.manage.tools']}" />
                         <b:navLink href="/manageAnotherWorks/listUser.faces" value="#{msgs['menu.manage.works']}" />
-                        <b:navLink href="/manageContacts/form.faces" value="#{msgs['menu.manage.contacts']}" />
+                        <b:navLink href="/manageContacts/formUser.faces" value="#{msgs['menu.manage.contacts']}" />
                     </b:listLinks>
                     <b:listLinks rendered="#{manageUsersController.admin}">
-                    	<b:navLink href="home.xhtml?faces-redirect=true" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
+                    	<b:navLink href="/home.faces" value="#{msgs['menu.manage.home']}" active="true" faces-redirect="true"/>
                         <b:navLink href="/managePublications/list.faces" value="#{msgs['menu.manage.publications']}"/>
                         <b:navLink href="/manageTerms/list.faces" value="#{msgs['menu.manage.dictionary']}" />
                         <b:navLink href="/manageOntologies/list.faces" value="#{msgs['menu.manage.ontologies']}" />

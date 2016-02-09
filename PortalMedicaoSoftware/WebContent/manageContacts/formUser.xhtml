@@ -27,8 +27,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:messageSubject" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageContacts.form.messageSubject.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['manageContacts.form.messageSubject']}" />
@@ -46,14 +44,12 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:messageText" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageContacts.form.messageText.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageContacts.form.messageText']}" />
 							</ui:define>
-							<h:inputTextarea id="text"
+							<h:inputTextarea id="messageText"
 								value="#{manageContactsController.selectedEntity.messageText}"
-								size="5000" required="true" span="6" rows="3"
+								size="5000" required="true" span="6" rows="3" style="width:500px;"
 								requiredMessage="#{msgs['crud.required.field']}">
 								<p:ajax event="blur" update="messageTextField" />
 							</h:inputTextarea>
@@ -65,10 +61,10 @@
 						<b:commandButton
 							action="#{manageContactsController.manageContact}"
 							value="#{msgs['button.save']}" update=":globalMessages form"
-							icon="ok" ajax="false" look="success" />
+							 ajax="false" look="success" />
 
 						<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
-							action="/index.xhtml?faces-redirect=true" icon="remove"
+							action="#{manageContactsController.returnHome}" immediate="true"
 							look="danger" />
 
 					</ui:decorate>

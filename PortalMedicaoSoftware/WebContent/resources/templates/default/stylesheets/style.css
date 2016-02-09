@@ -6,7 +6,7 @@ Released for free under the Creative Commons Attribution License
 body {
 	margin: 0;
 	padding: 0;
-	background: #C5DA99;
+	background: #f0f0f0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #787878;
@@ -34,10 +34,6 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 	width: 500px !important;
 }
 
-.selectOne {
-	width: 52% !important;
-}
-
 .btn-form {
 	height: 50px;
 	border: 1px solid #ccc;
@@ -51,14 +47,6 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 	margin-right: 20px;
 	margin-bottom: 20px;
 	width: 20%
-}
-
-.btn-similar-calls {
-	height: 65%;
-	border: 1px solid #ccc;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	width: 50%
 }
 
 .decorator-text {
@@ -84,12 +72,12 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 
 .navbar {
 	font-family: Helvetica, Arial, sans-serif;
-	color: #008000;
+	background-color: #00592d;
 }
 
 .navbar-brand {
 	font-family: 'Ubuntu', sans-serif;
-	color: #008000;
+	color: #ffffff;
 	font-size: 200% !important;
 }
 
@@ -103,7 +91,7 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 
 @media ( min-width : 768px) {
 	.sidebar {
-		background-color: #f5f5f5;
+		background-color: #abd1ac;
 		border-right: 1px solid #eee;
 		bottom: 0;
 		display: block;
@@ -130,7 +118,7 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 
 .nav-list>.active>a, .nav-sidebar>.active>a:hover, .nav-sidebar>.active>a:focus
 	{
-	background-color: #428bca;
+	background-color: #00592d;;
 	color: #fff;
 }
 
@@ -197,7 +185,7 @@ ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-input
 
 
 .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
-    background-color: #428bca;
+    background-color: #639d4f;
     color: #fff;
 }
 
@@ -515,4 +503,8 @@ table.dataTable thead .sorting:after {
 
 .panel-yellow a:hover {
     color: #df8a13;
+}
+
+.year{
+	width:150px;
 }

@@ -35,8 +35,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:name" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageAnotherWorks.form.name.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageAnotherWorks.form.name']}" />
 							</ui:define>
@@ -54,8 +52,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldDescription" value="form:description" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageAnotherWorks.form.description.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['manageAnotherWorks.form.description']}" />
@@ -73,8 +69,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldLink" value="form:link" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageAnotherWorks.form.link.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageAnotherWorks.form.link']}" />
 							</ui:define>
@@ -93,7 +87,7 @@
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageAnotherWorks.form.file']}" />
 							</ui:define>
-							<h:form enctype="multipart/form-data">
+							<h:form enctype="multipart/form-data" method="post">
 								<h:inputFile id="file"
 									value="#{manageAnotherWorksController.file}">
 								</h:inputFile>
@@ -124,7 +118,7 @@
 							</ui:define>
 							<b:selectOneMenu
 								value="#{manageAnotherWorksController.selectedEntity.isByNemo}"
-								id="isByNemo">
+								id="isByNemo" style="width:100px;">
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
           						<f:selectItem itemLabel="Outro" itemValue="false" />
          					</b:selectOneMenu>

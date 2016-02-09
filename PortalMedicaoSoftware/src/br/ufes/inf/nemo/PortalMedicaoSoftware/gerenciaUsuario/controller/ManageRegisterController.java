@@ -5,9 +5,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
-
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.application.ManageRegisterService;
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.domain.User;
 import br.ufes.inf.nemo.PortalMedicaoSoftware.util.SendEmail;

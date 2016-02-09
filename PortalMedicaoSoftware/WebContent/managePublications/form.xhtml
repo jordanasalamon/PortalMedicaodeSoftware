@@ -35,14 +35,12 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:title" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.title.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['managePublications.form.title']}" />
 							</ui:define>
 							<p:inputText id="title"
 								value="#{managePublicationsController.selectedEntity.title}"
-								size="50" required="true"
+								size="100" required="true" style="width:500px"
 								disabled="#{managePublicationsController.readOnly}">
 								<p:ajax event="blur" update="titleField" />
 							</p:inputText>
@@ -53,8 +51,6 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldName" value="form:typePublication" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.publication.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['managePublications.form.publicationType']}" />
@@ -77,14 +73,12 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="yearName" value="form:year" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.year.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText value="#{msgs['managePublications.form.year']}" />
 							</ui:define>
 							<b:inputText id="year"
 								value="#{managePublicationsController.year}" size="20"
-								disabled="false" required="true" style="width:80px;"
+								disabled="false" required="true"
 								requiredMessage="#{msgs['crud.required.field']}">
 								<p:ajax event="blur" update="yearField" />
 								<f:facet name="prepend">
@@ -94,11 +88,46 @@
 						</ui:decorate>
 					</h:panelGroup>
 
+
+					<h:panelGroup id="authorsField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:authors" />
+							<ui:define name="label">
+								<h:outputText value="#{msgs['managePublications.form.authors']}" />
+							</ui:define>
+							<p:inputText id="authors"
+								value="#{managePublicationsController.authors}"
+								size="1000" required="true" style="width:700px"
+								disabled="#{managePublicationsController.readOnly}">
+								<p:ajax event="blur" update="authorsField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+
+
+
+					<h:panelGroup id="fileField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:define name="label">
+								<h:outputText value="#{msgs['managePublications.form.file']}" />
+							</ui:define>
+							<h:form enctype="multipart/form-data">
+								<h:inputFile id="file"
+									value="#{managePublicationsController.file}">
+								</h:inputFile>
+								<h:commandButton value="Upload"
+									action="#{managePublicationsController.importFile()}">
+								</h:commandButton>
+							</h:form>
+						</ui:decorate>
+					</h:panelGroup>
+
 					<h:panelGroup id="abstractField">
-						<ui:decorate template="/resources/templates/default/formfield.xhtml">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldAbstract" value="form:abstract" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.abstract.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['managePublications.form.abstract']}" />
@@ -114,10 +143,9 @@
 
 
 					<h:panelGroup id="referenceField">
-						<ui:decorate template="/resources/templates/default/formfield.xhtml">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldReference" value="form:reference" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.reference.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['managePublications.form.reference']}" />
@@ -135,15 +163,13 @@
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldisByNemo" value="form:isByNemo" />
-							<ui:param name="tooltip"
-								value="#{msgs['managePublications.form.isByNemo.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['managePublications.form.isByNemo']}" />
 							</ui:define>
 							<b:selectOneMenu
 								value="#{managePublicationsController.selectedEntity.isByNemo}"
-								id="isByNemo">
+								id="isByNemo" style="width:100px;">
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
           						<f:selectItem itemLabel="Outro" itemValue="false" />
          					</b:selectOneMenu>

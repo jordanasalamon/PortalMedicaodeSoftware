@@ -11,4 +11,6 @@ public interface ManageContactsService extends CrudService<Contact> {
 
 	Contact createContact(String messageSubject, String messageText, User sender);
 
+	boolean getAllUnreadMessages();
+
 }
