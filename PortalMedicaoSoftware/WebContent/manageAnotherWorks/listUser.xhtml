@@ -19,6 +19,10 @@
 			<p:dataScroller value="#{manageAnotherWorksController.lazyEntities}" var="anotherwork"
 				chunkSize="10" mode="inline" scrollHeight="500">
 
+				<f:facet name="loader">
+            		<p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+        		</f:facet>	
+
 				<h:panelGrid columns="2" style="width:100%"
 					columnClasses="logo,detail">
 					<p:graphicImage value="/resources/images/nemo.gif" rendered="#{manageAnotherWorksController.lazyEntities.rowData.isByNemo}"/>

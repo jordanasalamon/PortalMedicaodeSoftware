@@ -20,6 +20,10 @@
 			<p:dataScroller value="#{manageOntologiesController.lazyEntities}"
 				var="tool" chunkSize="10" mode="inline" scrollHeight="500">
 
+				<f:facet name="loader">
+            		<p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+        		</f:facet>
+
 				<p:growl id="msgs" showDetail="true" />
 
 				<p:panel id="toggleable"
