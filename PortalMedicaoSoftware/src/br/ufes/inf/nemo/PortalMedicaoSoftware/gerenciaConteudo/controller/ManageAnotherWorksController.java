@@ -1,21 +1,22 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.controller;
 
-import java.util.logging.Logger;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 
-import org.primefaces.context.RequestContext;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.logging.Level;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.application.ManageAnotherWorksService;
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain.AnotherWork;
@@ -30,15 +31,35 @@ public class ManageAnotherWorksController extends CrudController<AnotherWork> {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ManageAnotherWorksService manageAnotherWorkService;
-	private Part file;
-	private static final Logger logger = Logger.getLogger(CrudController.class.getCanonicalName());
+	private UploadedFile file;
+	private String destination;
 
-	public Part getFile() {
+	private StreamedContent fileDownload;
+
+	private AnotherWork selectedAnotherWorkForDownload;
+
+	public AnotherWork getSelectedAnotherWorkForDownload() {
+		return selectedAnotherWorkForDownload;
+	}
+
+	public void setSelectedAnotherWorkForDownload(AnotherWork selectedAnotherWorkForDownload) {
+		this.selectedAnotherWorkForDownload = selectedAnotherWorkForDownload;
+	}
+
+	public UploadedFile getFile() {
 		return file;
 	}
 
-	public void setFile(Part file) {
+	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+
+	public StreamedContent getFileDownload() {
+		return fileDownload;
+	}
+
+	public void setFileDownload(StreamedContent fileDownload) {
+		this.fileDownload = fileDownload;
 	}
 
 	@Override
@@ -58,68 +79,72 @@ public class ManageAnotherWorksController extends CrudController<AnotherWork> {
 
 	@Override
 	protected void initFilters() {
-		addFilter(new SimpleFilter("manageSemesters.filter.byName", "name", "by Name"));
-		addFilter(new SimpleFilter("manageSemesters.filter.byAuthorship", "isByNemo", "by Authorship"));
+		addFilter(new SimpleFilter("manageAnotherWorks.filter.byName", "name", "by Name"));
+		addFilter(new SimpleFilter("manageAnotherWorks.filter.byAuthorship", "isByNemo", "by Authorship"));
 
 	}
 
-	private byte[] arquivoByte;
-
-	public void importFile() throws Exception {
+	public void copyFile(String fileName, InputStream in) {
 		try {
-			RequestContext.getCurrentInstance().execute("PF('dialogCarregaPaper').show();");
-			arquivoByte = fileToByte(file.getInputStream());
-			ByteBuffer arquivoBuffer = ByteBuffer.wrap(arquivoByte);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+			destination = System.getProperty("user.home") + "/portalMedicao/upload/anotherworks/";
 
-	public static byte[] fileToByte(InputStream inputFile) {
-		byte[] arquivo = null;
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[34394702];
-			int bytesRead = 0;
-			while ((bytesRead = inputFile.read(buffer, 0, 34394702)) != -1) {
-				baos.write(buffer, 0, bytesRead);
+			if (System.getProperty("os.name").contains("Windows")) {
+				destination = destination.replaceAll("/", "\\\\");
 			}
-			arquivo = baos.toByteArray();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			// write the inputStream to a FileOutputStream
+			File diretorio = new File(destination);
+			if (!diretorio.exists()) {
+				diretorio.mkdirs();
+			}
+			OutputStream out = new FileOutputStream(new File(destination + fileName));
 
-		return arquivo;
+			int read = 0;
+			byte[] bytes = new byte[1024];
+
+			while ((read = in.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+
+			in.close();
+			out.flush();
+			out.close();
+
+			System.out.println("New file created!");
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
-	public void upload() {
-		logger.info("call upload...");
-		logger.log(Level.INFO, "content-type:{0}", file.getContentType());
-		logger.log(Level.INFO, "filename:{0}", file.getName());
-		logger.log(Level.INFO, "submitted filename:{0}", file.getSubmittedFileName());
-		logger.log(Level.INFO, "size:{0}", file.getSize());
+	public StreamedContent download(String nameWorkSelected) {
+		AnotherWork workSelected = this.manageAnotherWorkService.retrieveByName(nameWorkSelected);
+		String caminho = workSelected.getFilepath();
+		FileInputStream stream = null;
 		try {
-
-			byte[] results = new byte[(int) file.getSize()];
-			InputStream in = file.getInputStream();
-			in.read(results);
-		} catch (IOException ex) {
-			logger.log(Level.SEVERE, " ex @{0}", ex);
+			stream = new FileInputStream(caminho);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Uploaded!"));
+		String nome_arquivo = caminho;
+		fileDownload = new DefaultStreamedContent(stream, caminho, nome_arquivo);
+		return fileDownload;
 	}
 
 	@Override
 	public String save() {
+
 		try {
-			file.write("/uploads/anotherworks/");
-		} catch (IOException e) {
+			if (file != null && !file.getFileName().equals("")) {
+				FacesMessage msg = new FacesMessage("Succesful" + file.getFileName() + " is uploaded.");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				copyFile(file.getFileName(), file.getInputstream());
+				super.selectedEntity.setFilepath(destination + file.getFileName());
+			} else {
+				super.selectedEntity.setFilepath(null);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		super.selectedEntity.setFilepath("/uploads/anotherworks/" + file.getSubmittedFileName());
 		manageAnotherWorkService.getDAO().save(super.selectedEntity);
-
 		super.selectedEntity = new AnotherWork();
 		return list();
 	}

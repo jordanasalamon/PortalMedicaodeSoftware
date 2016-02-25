@@ -27,7 +27,7 @@
 
 		<div class="crud">
 			<ui:decorate template="/resources/templates/default/form.xhtml">
-				<h:form id="form">
+				<h:form id="form" enctype="multipart/form-data">
 					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
 						handler="findObjectById('form:name').focus();" />
 
@@ -74,8 +74,7 @@
 							</ui:define>
 							<b:inputText id="link"
 								value="#{manageAnotherWorksController.selectedEntity.link}"
-								size="300" required="true" style="width:500px;"
-								requiredMessage="#{msgs['crud.required.field']}">
+								size="300" style="width:500px;">
 								<p:ajax event="blur" update="linkField" />
 							</b:inputText>
 						</ui:decorate>
@@ -87,31 +86,15 @@
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageAnotherWorks.form.file']}" />
 							</ui:define>
-							<h:form enctype="multipart/form-data" method="post">
-								<h:inputFile id="file"
-									value="#{manageAnotherWorksController.file}">
-								</h:inputFile>
-								<h:commandButton value="Upload"
-									action="#{manageAnotherWorksController.importFile()}">
-								</h:commandButton>
-							</h:form>
+								<p:fileUpload value="#{manageAnotherWorksController.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(pdf)$/"/>
 						</ui:decorate>
 					</h:panelGroup>
-
-					<form method="post" action="UploadServlet"
-						enctype="multipart/form-data">
-							Files to Upload:
-							<input type="file" name="arquivo" />
-							<input	type="submit" value="Salvar Dados" />
-					</form>
 
 
 					<h:panelGroup id="isByNemoField">
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
 							<ui:param name="fieldisByNemo" value="form:isByNemo" />
-							<ui:param name="tooltip"
-								value="#{msgs['manageAnotherWorks.form.isByNemo.tooltip']}" />
 							<ui:define name="label">
 								<h:outputText
 									value="#{msgs['manageAnotherWorks.form.isByNemo']}" />
@@ -119,6 +102,7 @@
 							<b:selectOneMenu
 								value="#{manageAnotherWorksController.selectedEntity.isByNemo}"
 								id="isByNemo" style="width:100px;">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
           						<f:selectItem itemLabel="Outro" itemValue="false" />
          					</b:selectOneMenu>
@@ -133,7 +117,7 @@
 							<p:commandButton action="#{manageAnotherWorksController.list}"
 								value="#{msgs['crud.button.cancel']}" immediate="true"
 								icon="buttonCancel" />
-							<p:commandButton action="#{manageAnotherWorksController.save}"
+							<p:commandButton action="#{manageAnotherWorksController.save}" ajax="false"
 								value="#{msgs['crud.button.save']}" icon="buttonOk"
 								update=":form :globalMessages" />
 							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"

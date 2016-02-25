@@ -89,6 +89,18 @@
 					</h:panelGroup>
 
 
+					<h:panelGroup id="fileField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:define name="label">
+								<h:outputText value="#{msgs['managePublications.form.file']}" />
+							</ui:define>
+							<p:fileUpload value="#{managePublicationsController.file}"
+								mode="simple" skinSimple="true" allowTypes="/(\.|\/)(pdf)$/" />
+						</ui:decorate>
+					</h:panelGroup>
+
+
 					<h:panelGroup id="authorsField">
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
@@ -97,30 +109,11 @@
 								<h:outputText value="#{msgs['managePublications.form.authors']}" />
 							</ui:define>
 							<p:inputText id="authors"
-								value="#{managePublicationsController.authors}"
-								size="1000" required="true" style="width:700px"
+								value="#{managePublicationsController.authors}" size="1000"
+								required="true" style="width:700px"
 								disabled="#{managePublicationsController.readOnly}">
 								<p:ajax event="blur" update="authorsField" />
 							</p:inputText>
-						</ui:decorate>
-					</h:panelGroup>
-
-
-
-					<h:panelGroup id="fileField">
-						<ui:decorate
-							template="/resources/templates/default/formfield.xhtml">
-							<ui:define name="label">
-								<h:outputText value="#{msgs['managePublications.form.file']}" />
-							</ui:define>
-							<h:form enctype="multipart/form-data">
-								<h:inputFile id="file"
-									value="#{managePublicationsController.file}">
-								</h:inputFile>
-								<h:commandButton value="Upload"
-									action="#{managePublicationsController.importFile()}">
-								</h:commandButton>
-							</h:form>
 						</ui:decorate>
 					</h:panelGroup>
 
@@ -170,6 +163,7 @@
 							<b:selectOneMenu
 								value="#{managePublicationsController.selectedEntity.isByNemo}"
 								id="isByNemo" style="width:100px;">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
           						<f:selectItem itemLabel="Outro" itemValue="false" />
          					</b:selectOneMenu>

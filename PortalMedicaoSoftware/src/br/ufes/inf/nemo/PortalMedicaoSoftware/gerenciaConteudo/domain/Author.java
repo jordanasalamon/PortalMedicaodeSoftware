@@ -8,4 +8,9 @@ import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.domain.Person;
 public class Author extends Person {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public String toString(){
+		return this.getName();
+	}
 }

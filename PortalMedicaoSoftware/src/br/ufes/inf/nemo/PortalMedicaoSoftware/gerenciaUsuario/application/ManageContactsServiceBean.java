@@ -1,7 +1,6 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.application;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -51,13 +50,6 @@ public class ManageContactsServiceBean extends CrudServiceBean<Contact> implemen
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	public boolean getAllUnreadMessages() {
-		List<Contact> unreadMessages = contactDAO.retrieveAllUnreadMessages();
-		if(unreadMessages != null && unreadMessages.size() != 0) return true;
-		else return false;
 	}
 
 

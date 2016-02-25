@@ -1,26 +1,26 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.controller;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.application.ManageAuthorsService;
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.application.ManagePublicationsService;
@@ -44,16 +44,22 @@ public class ManagePublicationsController extends CrudController<Publication> {
 	private String authors;
 	private String year;
 	
-	private Part file;
+	private UploadedFile file;
+	private String destination;
 	
-	private static final Logger logger = Logger.getLogger(CrudController.class.getCanonicalName());
+	public String getAuthors() {
+		return authors;
+	}
 
-	
-	public Part getFile() {
+	public void setAuthors(String authors) {
+		this.authors = authors;
+	}
+
+	public UploadedFile getFile() {
 		return file;
 	}
 
-	public void setFile(Part file) {
+	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
 	
@@ -82,10 +88,10 @@ public class ManagePublicationsController extends CrudController<Publication> {
 
 	@Override
 	protected void initFilters() {
-		addFilter(new SimpleFilter("manageSemesters.filter.byYear", "Year", "by Year"));
-		addFilter(new SimpleFilter("manageSemesters.filter.byTitle", "Title", "by Title"));
-		addFilter(new SimpleFilter("manageSemesters.filter.byAuthorship", "isByNemo", "by Authorship"));
-		addFilter(new SimpleFilter("manageSemesters.filter.byType", "Type", "by Type"));
+		addFilter(new SimpleFilter("managePublications.filter.byYear", "Year", getI18nMessage("msgs", "managePublications.text.filter.byYear")));
+		addFilter(new SimpleFilter("managePublications.filter.byTitle", "Title", getI18nMessage("msgs", "managePublications.text.filter.byTitle")));
+		addFilter(new SimpleFilter("managePublications.filter.byAuthorship", "isByNemo", getI18nMessage("msgs", "managePublications.text.filter.byAuthorship")));
+		addFilter(new SimpleFilter("managePublications.filter.byType", "Type", getI18nMessage("msgs", "managePublications.text.filter.byType")));
 
 
 	}
@@ -99,81 +105,72 @@ public class ManagePublicationsController extends CrudController<Publication> {
         return publicationsTypes;
     }
 	
+	
+	private void saveAuthors(String authors) {
+		Set<Author> selected = new HashSet<Author>();
+		String[] splitedString = authors.split(",");
+		for(int i = 0; i < splitedString.length; i++){
+			Author a = new Author();
+			a.setName(splitedString[i]);
+			selected.add(a);
+		}
+		this.selectedEntity.setAuthors(selected);
+		
+	}
+	
+	public void copyFile(String fileName, InputStream in) {
+		try {
+			destination = System.getProperty("user.home")+ "/portalMedicao/upload/publications/";
+
+			if(System.getProperty("os.name").contains("Windows")){
+				destination = destination.replaceAll("/", "\\\\");
+			}			
+			// write the inputStream to a FileOutputStream
+			File diretorio = new File(destination);
+            if (!diretorio.exists()){
+                diretorio.mkdirs();
+            }
+			OutputStream out = new FileOutputStream(new File(destination + fileName));
+
+			int read = 0;
+			byte[] bytes = new byte[1024];
+
+			while ((read = in.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+
+			in.close();
+			out.flush();
+			out.close();
+
+			System.out.println("New file created!");
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	@Override
 	public String save(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
 		Date data = null;
 		try {
 			data = new Date(format.parse(year).getTime());
-		} catch (ParseException e) {
+			if (file != null) {
+				FacesMessage msg = new FacesMessage("Succesful" + file.getFileName() + " is uploaded.");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				copyFile(file.getFileName(), file.getInputstream());
+			}
+		} catch (ParseException | IOException e) {
 			e.printStackTrace();
 		}
 		super.selectedEntity.setYear(data);
 		super.selectedEntity.setName(super.selectedEntity.getTitle());
 		super.selectedEntity.setDescription(super.selectedEntity.getAbstract());
 		saveAuthors(this.authors);
-		//super.selectedEntity.setFilepath("/uploads/publications/" + file.getSubmittedFileName());
+		super.selectedEntity.setFilepath(destination + file.getFileName());
 		managePublicationsService.getDAO().save(super.selectedEntity);
 			
 		super.selectedEntity = new Publication();
 		return list();
 	}
-	
-	private void saveAuthors(String authors) {
-		String[] splitedString = authors.split(",");
-		for(int i = 0; i < splitedString.length; i++){
-			Author a = new Author();
-			a.setName(splitedString[i]);
-			this.manageAuthorsService.getDAO().save(a);
-		}
-		
-	}
-
-	private byte[] arquivoByte;
-
-	public void importFile() throws Exception {
-		try {
-			RequestContext.getCurrentInstance().execute("PF('dialogCarregaPaper').show();");
-			arquivoByte = fileToByte(file.getInputStream());
-			ByteBuffer arquivoBuffer = ByteBuffer.wrap(arquivoByte);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static byte[] fileToByte(InputStream inputFile) {
-		byte[] arquivo = null;
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[34394702];
-			int bytesRead = 0;
-			while ((bytesRead = inputFile.read(buffer, 0, 34394702)) != -1) {
-				baos.write(buffer, 0, bytesRead);
-			}
-			arquivo = baos.toByteArray();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return arquivo;
-	}
-	
-	public void upload() {
-		logger.info("call upload...");
-		logger.log(Level.INFO, "content-type:{0}", file.getContentType());
-		logger.log(Level.INFO, "filename:{0}", file.getName());
-		logger.log(Level.INFO, "submitted filename:{0}", file.getSubmittedFileName());
-		logger.log(Level.INFO, "size:{0}", file.getSize());
-		try {
-
-			byte[] results = new byte[(int) file.getSize()];
-			InputStream in = file.getInputStream();
-			in.read(results);
-		} catch (IOException ex) {
-			logger.log(Level.SEVERE, " ex @{0}", ex);
-		}
-
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Uploaded!"));
-	}
-
 }

@@ -28,4 +28,9 @@ public class ManageAnotherWorksServiceBean extends CrudServiceBean<AnotherWork> 
 		return new AnotherWork();
 	}
 
+	@Override
+	public AnotherWork retrieveByName(String name) {
+		return anotherWorkDAO.retrieveByName(name);
+	}
+
 }

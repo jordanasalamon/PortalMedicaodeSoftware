@@ -1,5 +1,9 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.persistence;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +29,12 @@ public class PublicationJPADAO extends BaseJPADAO<Publication> implements Public
 	@Override
 	protected EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	public List<Publication> retrieveAllOrderedByYear() {
+		List<Publication> all = this.retrieveAll();
+		Collections.sort(all);
+		return all;
 	}
 
 }

@@ -8,4 +8,6 @@ import br.ufes.inf.nemo.util.ejb3.persistence.BaseDAO;
 @Local
 public interface AnotherWorkDAO extends BaseDAO<AnotherWork> {
 
+	AnotherWork retrieveByName(String name);
+
 }

@@ -92,8 +92,5 @@ public class ManageContactsController extends CrudController<Contact> {
 	    super.selectedEntity = new Contact();
 	}
 	
-	public boolean mostrarNotificacaoMensagensNaoLidas(){
-		return this.manageContactsService.getAllUnreadMessages();
-	}
 
 }

@@ -8,4 +8,5 @@ import br.ufes.inf.nemo.util.ejb3.application.CrudService;
 @Local
 public interface ManageAnotherWorksService extends CrudService<AnotherWork> {
 
+	AnotherWork retrieveByName(String name);
 }

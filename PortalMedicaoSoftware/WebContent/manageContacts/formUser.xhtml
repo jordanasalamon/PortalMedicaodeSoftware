@@ -58,14 +58,14 @@
 
 					<ui:decorate
 						template="/resources/templates/default/formbutton.xhtml">
-						<b:commandButton
+						<p:commandButton
 							action="#{manageContactsController.manageContact}"
-							value="#{msgs['button.save']}" update=":globalMessages form"
-							 ajax="false" look="success" />
+							value="#{msgs['manageContacts.button.sendContact']}" update=":globalMessages form"
+							 ajax="false" />
 
-						<b:commandButton ajax="false" value="#{msgs['button.cancel']}"
+						<p:commandButton ajax="false" value="#{msgs['button.cancel']}"
 							action="#{manageContactsController.returnHome}" immediate="true"
-							look="danger" />
+						 />
 
 					</ui:decorate>
 				</h:form>

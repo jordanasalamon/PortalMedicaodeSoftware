@@ -16,30 +16,56 @@
 		</h1>
 
 		<h:form>
-			<p:dataScroller value="#{manageAnotherWorksController.lazyEntities}" var="anotherwork"
-				chunkSize="10" mode="inline" scrollHeight="500">
+			<p:dataScroller value="#{manageAnotherWorksController.lazyEntities}"
+				var="anotherwork" chunkSize="10" mode="inline" scrollHeight="500">
 
-				<f:facet name="loader">
-            		<p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-        		</f:facet>	
+				<p:growl id="msgs" showDetail="true" />
 
-				<h:panelGrid columns="2" style="width:100%"
-					columnClasses="logo,detail">
-					<p:graphicImage value="/resources/images/nemo.gif" rendered="#{manageAnotherWorksController.lazyEntities.rowData.isByNemo}"/>
+				<p:panel id="toggleable"
+					header="#{manageAnotherWorksController.lazyEntities.rowData.name}"
+					toggleable="true" closable="false" toggleSpeed="500"
+					widgetVar="panel" style="margin-bottom:20px">
 
-					<p:outputPanel>
-						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="#{msgs['manageAnotherWorks.form.name']}:" />
-							<h:outputText value="#{manageAnotherWorksController.lazyEntities.rowData.name}" style="font-weight: bold" />
+					<p:ajax event="toggle" listener="#{panelView.onToggle}"
+						update="msgs" />
 
-							<h:outputText value="#{msgs['manageAnotherWorks.form.link']}:" />
-							<h:commandLink value="#{manageAnotherWorksController.lazyEntities.rowData.link}" style="font-weight: bold" />
+					<h:panelGrid columns="2" style="width:100%"
+						columnClasses="logo,detail">
+						<p:graphicImage value="/resources/images/nemo.gif"
+							rendered="#{manageAnotherWorksController.lazyEntities.rowData.isByNemo}"
+							style="width:100px;height:100px;" />
 
-							<h:outputText value="#{msgs['manageAnotherWorks.form.description']}:" />
-							<h:outputText value="#{manageAnotherWorksController.lazyEntities.rowData.description}" style="font-weight: bold" />
-						</h:panelGrid>
-					</p:outputPanel>
-				</h:panelGrid>
+						<p:outputPanel>
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputText value="#{msgs['manageAnotherWorks.form.name']}:" />
+								<h:outputText
+									value="#{manageAnotherWorksController.lazyEntities.rowData.name}"
+									style="font-weight: bold" />
+
+								<h:outputText value="#{msgs['manageAnotherWorks.form.link']}:" />
+								<h:outputLink
+									rendered="#{manageAnotherWorksController.lazyEntities.rowData.link != null}"
+									value="#{manageAnotherWorksController.lazyEntities.rowData.link}">
+									<h:outputText
+										value="#{manageAnotherWorksController.lazyEntities.rowData.link}" />
+								</h:outputLink>
+
+								<p:commandButton value="Download" ajax="false" rendered="#{manageAnotherWorksController.lazyEntities.rowData.link == null}"
+									onclick="PrimeFaces.monitorDownload(start, stop);"
+									icon="ui-icon-arrowthick-1-s">
+									<p:fileDownload value="#{manageAnotherWorksController.fileDownload}" actionListener="#{manageAnotherWorksController.download(manageAnotherWorksController.lazyEntities.rowData.name)}" />
+								</p:commandButton>
+							
+								<h:outputText
+									value="#{msgs['manageAnotherWorks.form.description']}:" />
+								<h:outputText
+									value="#{manageAnotherWorksController.lazyEntities.rowData.description}"
+									style="font-weight: bold" />
+							</h:panelGrid>
+						</p:outputPanel>
+					</h:panelGrid>
+				</p:panel>
+
 			</p:dataScroller>
 		</h:form>
 

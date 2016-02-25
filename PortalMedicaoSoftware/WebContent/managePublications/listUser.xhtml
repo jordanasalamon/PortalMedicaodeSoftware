@@ -1,0 +1,104 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="#{msgs['managePublications.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h1>
+			<h:outputText value="#{msgs['managePublications.title']}" />
+		</h1>
+
+
+		<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
+		<h:form id="filterForm">
+			<h:panelGroup id="filterBar"
+				rendered="#{(not empty managePublicationsController.filters)}">
+				<div class="crudFilterBar">
+					<h:outputText value="#{msgs['crud.text.filter']} " />
+					<p:selectOneMenu id="filter" required="true"
+						value="#{managePublicationsController.filterKey}">
+						<f:selectItems value="#{managePublicationsController.filters}"
+							var="filter" itemLabel="#{filter.label}"
+							itemValue="#{filter.key}" />
+						<f:ajax event="change" execute="@form"
+							listener="#{managePublicationsController.changeFilter}"
+							render="@form" />
+					</p:selectOneMenu>
+					<h:outputText value=": " />
+					<p:inputText id="filterText" size="20" required="false"
+						value="#{managePublicationsController.filterParam}"
+						rendered="#{managePublicationsController.filter.options == null}" />
+					<p:selectOneMenu id="filterSelect" required="false"
+						value="#{managePublicationsController.filterParam}"
+						rendered="#{managePublicationsController.filter.options != null}">
+						<f:selectItems
+							value="#{managePublicationsController.filter.reversedOptionsLabels}" />
+					</p:selectOneMenu>
+					<p:commandLink action="#{managePublicationsController.filter}"
+						process="@form" update="">
+						<h:graphicImage style="border: 0;"
+							value="/resources/templates/default/icons/button-find.png"
+							title="#{msgs['crud.button.filter']}" />
+					</p:commandLink>
+					<p:hotkey bind="#{msgs['crud.hotkey.filterFocus']}"
+						handler="if (findObjectById('filterForm:filterText') != null) findObjectById('filterForm:filterText').focus(); else findObjectById('filterForm:filterSelect').focus();" />
+				</div>
+			</h:panelGroup>
+		</h:form>
+
+
+		<h:form>
+			<p:dataScroller value="#{managePublicationsController.lazyEntities}"
+				var="publication" chunkSize="10" mode="inline" scrollHeight="500">
+
+
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:panel id="toggleable" toggleable="false" closable="false"
+					toggleSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+
+					<h:panelGrid columns="2" cellpadding="10">
+						<h:outputText value="#{msgs['managePublications.form.title']}:" />
+						<h:outputText
+							value="#{managePublicationsController.lazyEntities.rowData.title}" />
+						<h:outputText value="#{msgs['managePublications.form.year']}:" />
+						<h:outputText
+							value="#{managePublicationsController.lazyEntities.rowData.year}" />
+						<h:outputText
+							value="#{msgs['managePublications.form.publicationType']}:" />
+						<h:outputText
+							value="#{managePublicationsController.lazyEntities.rowData.type}" />
+						<h:outputText value="#{msgs['managePublications.form.authors']}:" />
+						<ui:repeat
+							value="#{managePublicationsController.lazyEntities.rowData.authors}"
+							var="author">
+							<h:outputText value="#{author.toString()}" />
+							<p:graphicImage value="/resources/images/nemo.gif"
+								rendered="#{managePublicationsController.lazyEntities.rowData.isByNemo}"
+								style="width:18px; height:18px;" />
+						</ui:repeat>
+						<h:outputText value="#{msgs['managePublications.form.abstract']}:" />
+						<h:outputText
+							value="#{managePublicationsController.lazyEntities.rowData.abstract}" />
+						<h:outputText value="Arquivo:" />
+						<p:commandLink> 
+							<h:outputText value="Clique aqui para acessar a publicação"/>
+						</p:commandLink>
+
+					</h:panelGrid>
+
+				</p:panel>
+			</p:dataScroller>
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
