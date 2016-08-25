@@ -12,5 +12,7 @@ public interface PublicationDAO extends BaseDAO<Publication> {
 
 	
 	public List<Publication> retrieveAllOrderedByYear();
+
+	public Publication retrieveByName(String namePublicationSelected);
 	
 }

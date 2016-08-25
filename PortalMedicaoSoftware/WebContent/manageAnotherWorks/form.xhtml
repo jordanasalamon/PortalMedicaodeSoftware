@@ -86,7 +86,8 @@
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageAnotherWorks.form.file']}" />
 							</ui:define>
-								<p:fileUpload value="#{manageAnotherWorksController.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(pdf)$/"/>
+							<p:fileUpload value="#{manageAnotherWorksController.file}"
+								mode="simple" skinSimple="true" allowTypes="/(\.|\/)(pdf)$/" />
 						</ui:decorate>
 					</h:panelGroup>
 
@@ -102,7 +103,7 @@
 							<b:selectOneMenu
 								value="#{manageAnotherWorksController.selectedEntity.isByNemo}"
 								id="isByNemo" style="width:100px;">
-								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"/>
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
           						<f:selectItem itemLabel="Outro" itemValue="false" />
          					</b:selectOneMenu>
@@ -117,8 +118,8 @@
 							<p:commandButton action="#{manageAnotherWorksController.list}"
 								value="#{msgs['crud.button.cancel']}" immediate="true"
 								icon="buttonCancel" />
-							<p:commandButton action="#{manageAnotherWorksController.save}" ajax="false"
-								value="#{msgs['crud.button.save']}" icon="buttonOk"
+							<p:commandButton action="#{manageAnotherWorksController.save}"
+								ajax="false" value="#{msgs['crud.button.save']}" icon="buttonOk"
 								update=":form :globalMessages" />
 							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
 								action="#{manageAnotherWorksController.list}" immediate="true" />

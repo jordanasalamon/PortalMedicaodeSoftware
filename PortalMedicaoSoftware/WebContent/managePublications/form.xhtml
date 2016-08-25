@@ -27,7 +27,7 @@
 
 		<div class="crud">
 			<ui:decorate template="/resources/templates/default/form.xhtml">
-				<h:form id="form">
+				<h:form id="form" enctype="multipart/form-data">
 					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
 						handler="findObjectById('form:title').focus();" />
 
@@ -40,7 +40,7 @@
 							</ui:define>
 							<p:inputText id="title"
 								value="#{managePublicationsController.selectedEntity.title}"
-								size="100" required="true" style="width:500px"
+								size="5000" required="true" style="width:500px"
 								disabled="#{managePublicationsController.readOnly}">
 								<p:ajax event="blur" update="titleField" />
 							</p:inputText>
@@ -95,7 +95,7 @@
 							<ui:define name="label">
 								<h:outputText value="#{msgs['managePublications.form.file']}" />
 							</ui:define>
-							<p:fileUpload value="#{managePublicationsController.file}"
+							<p:fileUpload value="#{managePublicationsController.file}" required="true" requiredMessage="#{msgs['crud.required.field']}"
 								mode="simple" skinSimple="true" allowTypes="/(\.|\/)(pdf)$/" />
 						</ui:decorate>
 					</h:panelGroup>
@@ -161,7 +161,7 @@
 									value="#{msgs['managePublications.form.isByNemo']}" />
 							</ui:define>
 							<b:selectOneMenu
-								value="#{managePublicationsController.selectedEntity.isByNemo}"
+								value="#{managePublicationsController.selectedEntity.isByNemo}" required="true" requiredMessage="#{msgs['crud.required.field']}"
 								id="isByNemo" style="width:100px;">
 								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
             					<f:selectItem itemLabel="NEMO" itemValue="true" />
@@ -180,7 +180,7 @@
 								value="#{msgs['crud.button.cancel']}" immediate="true"
 								icon="buttonCancel" />
 							<p:commandButton action="#{managePublicationsController.save}"
-								value="#{msgs['crud.button.save']}" icon="buttonOk"
+								value="#{msgs['crud.button.save']}" icon="buttonOk" ajax="false"
 								update=":form :globalMessages" />
 							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
 								action="#{managePublicationsController.list}" immediate="true" />

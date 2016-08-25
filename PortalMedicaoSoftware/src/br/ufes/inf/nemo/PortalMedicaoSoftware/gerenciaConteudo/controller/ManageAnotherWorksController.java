@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -34,17 +35,7 @@ public class ManageAnotherWorksController extends CrudController<AnotherWork> {
 	private UploadedFile file;
 	private String destination;
 
-	private StreamedContent fileDownload;
-
-	private AnotherWork selectedAnotherWorkForDownload;
-
-	public AnotherWork getSelectedAnotherWorkForDownload() {
-		return selectedAnotherWorkForDownload;
-	}
-
-	public void setSelectedAnotherWorkForDownload(AnotherWork selectedAnotherWorkForDownload) {
-		this.selectedAnotherWorkForDownload = selectedAnotherWorkForDownload;
-	}
+	private DefaultStreamedContent fileDownload;
 
 	public UploadedFile getFile() {
 		return file;
@@ -58,7 +49,7 @@ public class ManageAnotherWorksController extends CrudController<AnotherWork> {
 		return fileDownload;
 	}
 
-	public void setFileDownload(StreamedContent fileDownload) {
+	public void setFileDownload(DefaultStreamedContent fileDownload) {
 		this.fileDownload = fileDownload;
 	}
 
@@ -115,18 +106,18 @@ public class ManageAnotherWorksController extends CrudController<AnotherWork> {
 		}
 	}
 
-	public StreamedContent download(String nameWorkSelected) {
+	public void download(String nameWorkSelected) {
 		AnotherWork workSelected = this.manageAnotherWorkService.retrieveByName(nameWorkSelected);
-		String caminho = workSelected.getFilepath();
-		FileInputStream stream = null;
+		String filepath = workSelected.getFilepath();
+		File file = new File(filepath);
+		FileInputStream input = null;
 		try {
-			stream = new FileInputStream(caminho);
+			input = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		String nome_arquivo = caminho;
-		fileDownload = new DefaultStreamedContent(stream, caminho, nome_arquivo);
-		return fileDownload;
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		setFileDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
 	}
 
 	@Override

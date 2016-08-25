@@ -55,14 +55,15 @@
 
 
 		<h:form>
-			<p:dataScroller value="#{managePublicationsController.lazyEntities}"
+			<p:dataScroller value="#{managePublicationsController.lazyEntities}" 
 				var="publication" chunkSize="10" mode="inline" scrollHeight="500">
 
 
 				<p:growl id="msgs" showDetail="true" />
 
-				<p:panel id="toggleable" toggleable="false" closable="false"
-					toggleSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+				<p:panel id="toggleable" 
+					toggleable="false" closable="false" toggleSpeed="500"
+					widgetVar="panel" style="margin-bottom:20px">
 
 					<h:panelGrid columns="2" cellpadding="10">
 						<h:outputText value="#{msgs['managePublications.form.title']}:" />
@@ -84,13 +85,41 @@
 								rendered="#{managePublicationsController.lazyEntities.rowData.isByNemo}"
 								style="width:18px; height:18px;" />
 						</ui:repeat>
+
 						<h:outputText value="#{msgs['managePublications.form.abstract']}:" />
 						<h:outputText
 							value="#{managePublicationsController.lazyEntities.rowData.abstract}" />
-						<h:outputText value="Arquivo:" />
-						<p:commandLink> 
-							<h:outputText value="Clique aqui para acessar a publicação"/>
-						</p:commandLink>
+
+						<h:outputText
+							value="#{msgs['managePublications.form.reference']}:" />
+						<h:outputText
+							value="#{managePublicationsController.lazyEntities.rowData.reference}" />
+
+						<h:outputText value="#{msgs['managePublications.listUser.link']}:" />
+
+						<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+							draggable="false" closable="false" resizable="false">
+							<p:graphicImage name="/resources/images/ajaxloadingbar.gif" />
+						</p:dialog>
+
+						<p:commandButton value="Download" ajax="false"
+							rendered="#{managePublicationsController.lazyEntities.rowData.filepath != null}"
+							onclick="PrimeFaces.monitorDownload(start, stop);"
+							icon="ui-icon-arrowthick-1-s"
+							actionListener="#{managePublicationsController.download(publication.name)}">
+							<p:fileDownload
+								value="#{managePublicationsController.fileDownload}" />
+						</p:commandButton>
+
+						<script type="text/javascript">
+									function start() {
+    									PF('statusDialog').show();
+									}
+ 
+									function stop() {
+    									PF('statusDialog').hide();
+									}
+								</script>
 
 					</h:panelGrid>
 

@@ -47,7 +47,7 @@
 							<ui:define name="label">
 								<h:outputText value="#{msgs['manageContacts.form.messageText']}" />
 							</ui:define>
-							<h:inputTextarea id="messageText"
+							<h:inputTextarea id="messageText" 
 								value="#{manageContactsController.selectedEntity.messageText}"
 								size="5000" required="true" span="6" rows="3" style="width:500px;"
 								requiredMessage="#{msgs['crud.required.field']}">
@@ -61,7 +61,7 @@
 						<p:commandButton
 							action="#{manageContactsController.manageContact}"
 							value="#{msgs['manageContacts.button.sendContact']}" update=":globalMessages form"
-							 ajax="false" />
+							/>
 
 						<p:commandButton ajax="false" value="#{msgs['button.cancel']}"
 							action="#{manageContactsController.returnHome}" immediate="true"

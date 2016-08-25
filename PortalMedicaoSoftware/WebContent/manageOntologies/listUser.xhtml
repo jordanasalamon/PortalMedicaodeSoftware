@@ -18,7 +18,7 @@
 
 		<h:form>
 			<p:dataScroller value="#{manageOntologiesController.lazyEntities}"
-				var="tool" chunkSize="10" mode="inline" scrollHeight="500">
+				var="ontology" chunkSize="10" mode="inline" scrollHeight="500">
 
 				<p:growl id="msgs" showDetail="true" />
 
@@ -33,15 +33,48 @@
 						<h:outputText value="#{msgs['manageOntologies.form.name']}:" />
 						<h:outputText
 							value="#{manageOntologiesController.lazyEntities.rowData.name}" />
+
 						<h:outputText
 							value="#{msgs['manageOntologies.form.description']}:" />
 						<h:outputText
-							value="#{manageOntologiesController.lazyEntities.rowData.description}" />
+							value="#{manageOntologiesController.lazyEntities.rowData.description}"
+							style="font-weight: bold" />
+
 						<h:outputText value="#{msgs['manageOntologies.form.link']}:" />
-						<h:outputLink value="#{manageOntologiesController.lazyEntities.rowData.link}">
-							<h:outputText value="#{msgs['manageOntologies.list.link']}" />
-							<f:param/>
+						<h:outputLink
+							rendered="#{manageOntologiesController.lazyEntities.rowData.link != null}"
+							value="#{manageOntologiesController.lazyEntities.rowData.link}">
+							<h:outputText
+								value="#{manageOntologiesController.lazyEntities.rowData.link}" />
 						</h:outputLink>
+
+
+						<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+							draggable="false" closable="false" resizable="false">
+							<p:graphicImage name="/resources/images/ajaxloadingbar.gif" />
+						</p:dialog>
+
+						<p:commandButton value="Download" ajax="false"
+							rendered="#{manageOntologiesController.lazyEntities.rowData.filepath != null}"
+							onclick="PrimeFaces.monitorDownload(start, stop);"
+							icon="ui-icon-arrowthick-1-s"
+							actionListener="#{manageOntologiesController.download(ontology.name)}">
+							<p:fileDownload
+								value="#{manageOntologiesController.fileDownload}" />
+						</p:commandButton>
+
+						<script type="text/javascript">
+									function start() {
+    									PF('statusDialog').show();
+									}
+ 
+									function stop() {
+    									PF('statusDialog').hide();
+									}
+								</script>
+
+
+
 
 					</h:panelGrid>
 

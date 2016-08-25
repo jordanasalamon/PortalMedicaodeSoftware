@@ -31,4 +31,9 @@ public class ManagePublicationsServiceBean extends CrudServiceBean<Publication> 
 		return new Publication();
 	}
 
+	@Override
+	public Publication retrieveByName(String namePublicationSelected) {
+		return publicationDAO.retrieveByName(namePublicationSelected);
+	}
+
 }

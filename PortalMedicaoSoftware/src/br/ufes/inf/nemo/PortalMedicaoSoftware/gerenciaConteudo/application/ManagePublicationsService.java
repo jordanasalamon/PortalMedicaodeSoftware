@@ -8,4 +8,6 @@ import br.ufes.inf.nemo.util.ejb3.application.CrudService;
 @Local
 public interface ManagePublicationsService extends CrudService<Publication> {
 
+	Publication retrieveByName(String namePublicationSelected);
+
 }

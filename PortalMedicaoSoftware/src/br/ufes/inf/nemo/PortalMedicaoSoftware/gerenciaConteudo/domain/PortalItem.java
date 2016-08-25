@@ -3,7 +3,6 @@ package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.validation.constraints.Size;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
@@ -14,7 +13,8 @@ public class PortalItem extends PersistentObjectSupport implements Comparable<Po
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Size(max = 150)
+	@Lob
+	@Column(length = 100000)
 	private String name;
 	@Lob
 	@Column( length = 100000 )

@@ -16,7 +16,7 @@
 		</h1>
 
 		<h:form>
-			<p:dataScroller value="#{manageAnotherWorksController.lazyEntities}"
+			<p:dataScroller value="#{manageAnotherWorksController.lazyEntities}" rendered="#{manageUsersController.loggedIn}"
 				var="anotherwork" chunkSize="10" mode="inline" scrollHeight="500">
 
 				<p:growl id="msgs" showDetail="true" />
@@ -50,12 +50,31 @@
 										value="#{manageAnotherWorksController.lazyEntities.rowData.link}" />
 								</h:outputLink>
 
-								<p:commandButton value="Download" ajax="false" rendered="#{manageAnotherWorksController.lazyEntities.rowData.link == null}"
+
+								<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+									draggable="false" closable="false" resizable="false">
+									<p:graphicImage name="/resources/images/ajaxloadingbar.gif" />
+								</p:dialog>
+
+								<p:commandButton value="Download" ajax="false"
+									rendered="#{manageAnotherWorksController.lazyEntities.rowData.filepath != null}"
 									onclick="PrimeFaces.monitorDownload(start, stop);"
-									icon="ui-icon-arrowthick-1-s">
-									<p:fileDownload value="#{manageAnotherWorksController.fileDownload}" actionListener="#{manageAnotherWorksController.download(manageAnotherWorksController.lazyEntities.rowData.name)}" />
+									icon="ui-icon-arrowthick-1-s" actionListener="#{manageAnotherWorksController.download(anotherwork.name)}">
+									<p:fileDownload
+										value="#{manageAnotherWorksController.fileDownload}" />
 								</p:commandButton>
-							
+
+								<script type="text/javascript">
+									function start() {
+    									PF('statusDialog').show();
+									}
+ 
+									function stop() {
+    									PF('statusDialog').hide();
+									}
+								</script>
+
+
 								<h:outputText
 									value="#{msgs['manageAnotherWorks.form.description']}:" />
 								<h:outputText

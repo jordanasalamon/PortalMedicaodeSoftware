@@ -1,6 +1,8 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +19,12 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.application.ManageAuthorsService;
@@ -47,13 +52,7 @@ public class ManagePublicationsController extends CrudController<Publication> {
 	private UploadedFile file;
 	private String destination;
 	
-	public String getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(String authors) {
-		this.authors = authors;
-	}
+	private DefaultStreamedContent fileDownload;
 
 	public UploadedFile getFile() {
 		return file;
@@ -61,6 +60,22 @@ public class ManagePublicationsController extends CrudController<Publication> {
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+
+	public StreamedContent getFileDownload() {
+		return fileDownload;
+	}
+
+	public void setFileDownload(DefaultStreamedContent fileDownload) {
+		this.fileDownload = fileDownload;
+	}
+
+	public String getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(String authors) {
+		this.authors = authors;
 	}
 	
 	public String getYear() {
@@ -148,6 +163,21 @@ public class ManagePublicationsController extends CrudController<Publication> {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void download(String namePublicationSelected) {
+		Publication publicationSelected = this.managePublicationsService.retrieveByName(namePublicationSelected);
+		String filepath = publicationSelected.getFilepath();
+		File file = new File(filepath);
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		setFileDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+		
+	}
 
 	@Override
 	public String save(){
@@ -155,7 +185,7 @@ public class ManagePublicationsController extends CrudController<Publication> {
 		Date data = null;
 		try {
 			data = new Date(format.parse(year).getTime());
-			if (file != null) {
+			if (file != null && !file.getFileName().equals("")) {
 				FacesMessage msg = new FacesMessage("Succesful" + file.getFileName() + " is uploaded.");
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				copyFile(file.getFileName(), file.getInputstream());

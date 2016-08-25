@@ -20,9 +20,13 @@ public class Publication extends PortalItem {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Lob
+	@Column(length = 5000)
 	private String Title;
 	private Date Year;
 	private String Filepath;
+	@Lob
+	@Column(length = 100000)
 	private String Reference;
 	@Lob
 	@Column(length = 100000)

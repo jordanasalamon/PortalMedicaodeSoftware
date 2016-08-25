@@ -28,4 +28,10 @@ public class ManageOntologiesServiceBean extends CrudServiceBean<Ontology> imple
 		return new Ontology();
 	}
 
+	@Override
+	public Ontology retrieveByName(String nameOntologySelected) {
+		return ontologyDAO.retrieveByName(nameOntologySelected);
+
+	}
+
 }

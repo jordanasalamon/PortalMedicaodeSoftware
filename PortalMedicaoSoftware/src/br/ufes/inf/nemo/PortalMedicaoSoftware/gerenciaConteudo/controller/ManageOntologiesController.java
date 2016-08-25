@@ -1,6 +1,8 @@
 package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,9 +11,12 @@ import java.io.OutputStream;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaConteudo.application.ManageOntologiesService;
@@ -29,6 +34,9 @@ public class ManageOntologiesController extends CrudController<Ontology> {
 	private ManageOntologiesService manageOntologiesService;
 	private UploadedFile file;
 	private String destination;
+	
+	private DefaultStreamedContent fileDownload;
+
 
 	public UploadedFile getFile() {
 		return file;
@@ -37,6 +45,15 @@ public class ManageOntologiesController extends CrudController<Ontology> {
 	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
+	
+	public StreamedContent getFileDownload() {
+		return fileDownload;
+	}
+
+	public void setFileDownload(DefaultStreamedContent fileDownload) {
+		this.fileDownload = fileDownload;
+	}
+
 
 	@Override
 	protected CrudService<Ontology> getCrudService() {
@@ -89,11 +106,26 @@ public class ManageOntologiesController extends CrudController<Ontology> {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	
+	public void download(String nameOntologySelected) {
+		Ontology ontologySelected = this.manageOntologiesService.retrieveByName(nameOntologySelected);
+		String filepath = ontologySelected.getFilepath();
+		File file = new File(filepath);
+		FileInputStream input = null;
+		try {
+			input = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		setFileDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+	}
 
 	@Override
 	public String save() {
 		try {
-			if (file != null) {
+			if (file != null && !file.getFileName().equals("")) {
 				FacesMessage msg = new FacesMessage("Succesful" + file.getFileName() + " is uploaded.");
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				copyFile(file.getFileName(), file.getInputstream());

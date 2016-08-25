@@ -2,7 +2,6 @@ package br.ufes.inf.nemo.PortalMedicaoSoftware.gerenciaUsuario.controller;
 
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -85,12 +84,5 @@ public class ManageContactsController extends CrudController<Contact> {
 	public String returnHome(){
 		return "/home.xhtml?faces-redirect=true";
 	}
-	
-
-	@PostConstruct
-	public void init() {
-	    super.selectedEntity = new Contact();
-	}
-	
 
 }
